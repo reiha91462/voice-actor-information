@@ -1,0 +1,13 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Read-only original notebook retained after replacing its inaccessible owner
+.voice-actor-notebook-original-locked/
