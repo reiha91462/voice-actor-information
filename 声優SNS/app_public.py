@@ -8,6 +8,7 @@ APP_DIR = Path(__file__).resolve().parent
 VOICE_ACTORS = {
     "nanase_tsumugi": {
         "name": "七瀬 つむぎ",
+        "sort_name": "ななせ つむぎ",
         "agency": "ホーリーピーク",
         "data_path": APP_DIR / "nanase_tsumugi_data.json",
         "analysis_path": APP_DIR / "nanase_tsumugi_voice_analyses.json",
@@ -15,6 +16,7 @@ VOICE_ACTORS = {
     },
     "hasegawa_ikumi": {
         "name": "長谷川 育美",
+        "sort_name": "はせがわ いくみ",
         "agency": "ラクーンドッグ",
         "data_path": APP_DIR / "hasegawa_ikumi_data.json",
         "analysis_path": APP_DIR / "hasegawa_ikumi_voice_analyses.json",
@@ -66,17 +68,21 @@ def show_actor_selection() -> None:
     st.title("🎙️ 声優情報")
     st.write("出演歴やボイスサンプルを見たい声優を選択してください。")
 
-    actor_id = st.selectbox(
-        "声優を選択",
-        options=list(VOICE_ACTORS),
-        format_func=lambda key: (
-            f"{VOICE_ACTORS[key]['name']}（{VOICE_ACTORS[key]['agency']}）"
-        ),
+    sorted_actor_ids = sorted(
+        VOICE_ACTORS,
+        key=lambda key: VOICE_ACTORS[key].get("sort_name", VOICE_ACTORS[key]["name"]),
     )
 
-    if st.button("選択した声優の情報を見る", type="primary"):
-        st.session_state.selected_voice_actor = actor_id
-        st.rerun()
+    for actor_id in sorted_actor_ids:
+        actor = VOICE_ACTORS[actor_id]
+        if st.button(
+            actor["name"],
+            key=f"select_{actor_id}",
+            help=f"{actor['agency']} 所属",
+            use_container_width=True,
+        ):
+            st.session_state.selected_voice_actor = actor_id
+            st.rerun()
 
 
 def show_actor_details(actor_id: str) -> None:
@@ -87,7 +93,7 @@ def show_actor_details(actor_id: str) -> None:
         st.session_state.selected_voice_actor = None
         st.rerun()
 
-    st.title("🎙️ 声優情報ダッシュボード")
+    st.title("🎙️ 声優情報")
     st.header(actor["name"])
     st.caption(f"所属事務所：{actor['agency']}")
 
