@@ -115,10 +115,8 @@
             ]
         },
         "voice_sample_groups": {
-            "まとめ": [
-                "https://www.raccoon-dog.co.jp/talent/vsample/r/hasegawa/hasegawa_all.mp3"
-            ],
             "演技": [
+                "https://www.raccoon-dog.co.jp/talent/vsample/r/hasegawa/hasegawa_all.mp3",
                 "https://www.raccoon-dog.co.jp/talent/vsample/r/hasegawa/hasegawa_1.wav",
                 "https://www.raccoon-dog.co.jp/talent/vsample/r/hasegawa/hasegawa_2.wav",
                 "https://www.raccoon-dog.co.jp/talent/vsample/r/hasegawa/hasegawa_3.wav",

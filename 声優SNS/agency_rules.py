@@ -8,7 +8,6 @@ AGENCY_RULES = {
     "ラクーンドッグ": {
         "default_voice_sample_group": "サンプル",
         "voice_filename_groups": {
-            "_all": "まとめ",
             "_na": "アナウンス",
         },
         "fallback_voice_sample_group": "演技",
