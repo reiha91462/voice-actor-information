@@ -21,6 +21,7 @@ VOICE_ACTORS = {
         "roman_name": "Nanase Tsumugi",
         "sort_name": "ななせ つむぎ",
         "agency": "ホーリーピーク",
+        "source_url": "https://holypeak.com/talent/voice-actor-women/%e4%b8%83%e7%80%ac-%e3%81%a4%e3%82%80%e3%81%8e/",
         "representative_works": [
             {
                 "category": "ゲーム",
@@ -66,6 +67,7 @@ VOICE_ACTORS = {
         "roman_name": "Hasegawa Ikumi",
         "sort_name": "はせがわ いくみ",
         "agency": "ラクーンドッグ",
+        "source_url": "https://www.raccoon-dog.co.jp/talent/r11-hasegawa.html",
         "representative_works": [],
         "social_links": {
             "twitter": {
@@ -214,35 +216,58 @@ def get_social_links(actor: dict, voice_actor_data: dict) -> dict:
     return actor.get("social_links", {})
 
 
+def get_source_url(actor: dict, voice_actor_data: dict) -> str:
+    """公式サイトの出典URLを返す。"""
+    source_url = voice_actor_data.get("source_url") or actor.get("source_url", "")
+    return str(source_url).strip()
+
+
 def show_social_links(social_links: dict) -> None:
-    """InstagramとXの外部リンクボタン、直近ポストを表示する。"""
+    """本人サイト、SNS、ピックアップポスト、YouTubeを表示する。"""
     if not isinstance(social_links, dict) or not social_links:
         return
 
+    website = social_links.get("website") or social_links.get("homepage")
     instagram = social_links.get("instagram")
     twitter = social_links.get("twitter") or social_links.get("x")
-    if not instagram and not twitter:
+    youtube = social_links.get("youtube")
+    if not website and not instagram and not twitter and not youtube:
         return
 
     st.subheader("SNS")
-    instagram_html = build_instagram_button_html(instagram)
-    twitter_html = build_twitter_button_html(twitter)
+    website_html = build_generic_link_button_html(
+        website,
+        default_label="本人ホームページ",
+        action_label="ホームページを見る",
+        background="#2563eb",
+    )
+    if website_html:
+        components.html(website_html, height=105)
 
-    if instagram_html and twitter_html:
-        left_column, right_column = st.columns(2)
-        with left_column:
-            components.html(instagram_html, height=110)
-        with right_column:
-            components.html(twitter_html, height=110)
-    elif instagram_html:
-        components.html(instagram_html, height=110)
-    elif twitter_html:
-        components.html(twitter_html, height=110)
+    sns_buttons = [
+        build_instagram_button_html(instagram),
+        build_twitter_button_html(twitter),
+    ]
+    sns_buttons = [button for button in sns_buttons if button]
+    if sns_buttons:
+        columns = st.columns(len(sns_buttons))
+        for column, button_html in zip(columns, sns_buttons):
+            with column:
+                components.html(button_html, height=110)
 
     featured_posts = get_featured_twitter_posts(twitter)
     if featured_posts:
         embed_mode = str(twitter.get("featured_posts_embed_mode", "card")).strip()
         show_featured_twitter_posts(featured_posts, embed_mode)
+
+    youtube_html = build_generic_link_button_html(
+        youtube,
+        default_label="YouTube",
+        action_label="YouTubeを見る",
+        background="#ff0033",
+    )
+    if youtube_html:
+        components.html(youtube_html, height=105)
 
 
 def build_instagram_button_html(instagram: dict | None) -> str:
@@ -279,6 +304,51 @@ def build_instagram_button_html(instagram: dict | None) -> str:
       Instagramを見る
     </div>
     <div style="font-size: 13px; margin-top: 6px; opacity: 0.9;">{account_label}</div>
+  </a>
+</div>
+""".strip()
+
+
+def build_generic_link_button_html(
+    link_data: dict | None,
+    default_label: str,
+    action_label: str,
+    background: str,
+) -> str:
+    """汎用外部リンクボタンHTMLを作る。"""
+    if not isinstance(link_data, dict):
+        return ""
+
+    profile_url = str(link_data.get("profile_url") or link_data.get("url") or "").strip()
+    if not profile_url:
+        return ""
+
+    label = str(link_data.get("label", default_label)).strip() or default_label
+    username = str(link_data.get("username", "")).strip().lstrip("@")
+    account_label = f"@{username}" if username else profile_url
+    safe_url = escape(profile_url, quote=True)
+    safe_label = escape(label)
+    safe_action_label = escape(action_label)
+    safe_account_label = escape(account_label)
+    safe_background = escape(background, quote=True)
+    return f"""
+<div style="font-family: sans-serif;">
+  <a href="{safe_url}" target="_blank" rel="noopener noreferrer"
+     style="
+       display: block;
+       padding: 18px 20px;
+       border-radius: 8px;
+       color: #fff;
+       text-decoration: none;
+       background: {safe_background};
+       box-shadow: 0 4px 14px rgba(0, 0, 0, 0.16);
+     ">
+    <div style="font-size: 14px; opacity: 0.9;">{safe_label}</div>
+    <div style="font-size: 18px; font-weight: 700; margin-top: 4px;">
+      {safe_action_label}
+    </div>
+    <div style="font-size: 13px; margin-top: 6px; opacity: 0.85;
+                overflow-wrap: anywhere;">{safe_account_label}</div>
   </a>
 </div>
 """.strip()
@@ -478,6 +548,7 @@ def show_actor_details(actor_id: str) -> None:
 
     representative_works = get_representative_works(actor, voice_actor_data)
     social_links = get_social_links(actor, voice_actor_data)
+    source_url = get_source_url(actor, voice_actor_data)
 
     st.title(f"{actor['name']}（{actor['roman_name']}）")
     st.subheader("声優情報")
@@ -538,6 +609,20 @@ def show_actor_details(actor_id: str) -> None:
             st.caption("※この声優のボイスサンプルはまだAI解析されていません。")
     else:
         st.info("ボイスサンプルのデータはありません。")
+
+    show_source_notice(source_url)
+
+
+def show_source_notice(source_url: str) -> None:
+    """公式サイトから情報を引用している旨を表示する。"""
+    if not source_url:
+        return
+    st.divider()
+    st.caption(
+        "出演歴・ボイスサンプル等の基本情報は、所属事務所の公式サイトを"
+        "参照しています。"
+    )
+    st.markdown(f"出典：[所属事務所公式プロフィール]({source_url})")
 
 
 selected_actor = st.session_state.get("selected_voice_actor")

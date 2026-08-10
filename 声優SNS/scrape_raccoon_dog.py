@@ -2,7 +2,7 @@ import json
 import re
 from pathlib import Path
 from pprint import pprint
-from urllib.parse import urljoin
+from urllib.parse import urljoin, urlparse
 
 import requests
 from bs4 import BeautifulSoup
@@ -117,6 +117,57 @@ def flatten_voice_sample_groups(voice_sample_groups: dict[str, list[str]]) -> li
     return voice_samples
 
 
+def extract_social_links(soup: BeautifulSoup, base_url: str) -> dict:
+    """プロフィールページ内の外部リンクからSNS/本人サイト候補を取得する。"""
+    social_links = {}
+    for link in soup.select("a[href]"):
+        href = link.get("href")
+        if not href:
+            continue
+        absolute_url = urljoin(base_url, href)
+        parsed_url = urlparse(absolute_url)
+        host = parsed_url.netloc.lower()
+        label = normalize_text(link.get_text(" ", strip=True))
+
+        if "x.com" in host or "twitter.com" in host:
+            username = parsed_url.path.strip("/").split("/", 1)[0]
+            if username:
+                social_links["twitter"] = {
+                    "username": username,
+                    "profile_url": absolute_url,
+                    "label": label or "X",
+                }
+        elif "instagram.com" in host:
+            username = parsed_url.path.strip("/").split("/", 1)[0]
+            social_links["instagram"] = {
+                "username": username,
+                "profile_url": absolute_url,
+                "label": label or "Instagram",
+            }
+        elif "youtube.com" in host or "youtu.be" in host:
+            social_links["youtube"] = {
+                "profile_url": absolute_url,
+                "label": label or "YouTube",
+            }
+        elif is_external_link(absolute_url, base_url):
+            social_links.setdefault(
+                "website",
+                {
+                    "profile_url": absolute_url,
+                    "label": label or "本人ホームページ",
+                },
+            )
+
+    return social_links
+
+
+def is_external_link(link_url: str, base_url: str) -> bool:
+    """同一ドメイン外のHTTPリンクか判定する。"""
+    link_host = urlparse(link_url).netloc.lower()
+    base_host = urlparse(base_url).netloc.lower()
+    return bool(link_host and base_host and link_host != base_host)
+
+
 def scrape_raccoon_dog_profile(url: str) -> dict:
     """ラクーンドッグの声優プロフィールを1回の通信で取得する。"""
     response = requests.get(url, headers=HEADERS, timeout=(5, 20))
@@ -128,7 +179,9 @@ def scrape_raccoon_dog_profile(url: str) -> dict:
     return {
         name: {
             "agency": AGENCY_NAME,
+            "source_url": response.url,
             "appearances": extract_appearances(soup),
+            "social_links": extract_social_links(soup, response.url),
             "voice_sample_groups": voice_sample_groups,
             "voice_samples": flatten_voice_sample_groups(voice_sample_groups),
         }
