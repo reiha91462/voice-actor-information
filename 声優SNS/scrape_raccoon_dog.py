@@ -7,7 +7,10 @@ from urllib.parse import urljoin
 import requests
 from bs4 import BeautifulSoup
 
+from agency_rules import classify_voice_sample_by_agency
 
+
+AGENCY_NAME = "ラクーンドッグ"
 PROFILE_URL = "https://www.raccoon-dog.co.jp/talent/r11-hasegawa.html"
 OUTPUT_PATH = Path(__file__).resolve().parent / "hasegawa_ikumi_data.json"
 HEADERS = {
@@ -71,8 +74,8 @@ def extract_appearances(soup: BeautifulSoup) -> dict[str, list[str]]:
     return appearances
 
 
-def extract_voice_samples(soup: BeautifulSoup, base_url: str) -> list[str]:
-    """ボイスサンプルの相対URLを絶対URLに変換する。"""
+def extract_voice_sample_groups(soup: BeautifulSoup, base_url: str) -> dict[str, list[str]]:
+    """ボイスサンプルのURLを分類ごとに取得する。"""
     voice_heading = next(
         (
             heading
@@ -88,17 +91,29 @@ def extract_voice_samples(soup: BeautifulSoup, base_url: str) -> list[str]:
     if voice_block is None:
         raise ValueError("ボイスサンプル領域が見つかりません。")
 
-    voice_samples = []
+    voice_sample_groups: dict[str, list[str]] = {}
     for source in voice_block.select("audio source[src]"):
         source_url = source.get("src")
         if not source_url:
             continue
         absolute_url = urljoin(base_url, source_url)
-        if absolute_url not in voice_samples:
-            voice_samples.append(absolute_url)
+        group_name = classify_voice_sample_by_agency(AGENCY_NAME, absolute_url)
+        voice_sample_groups.setdefault(group_name, [])
+        if absolute_url not in voice_sample_groups[group_name]:
+            voice_sample_groups[group_name].append(absolute_url)
 
-    if not voice_samples:
+    if not voice_sample_groups:
         raise ValueError("ボイスサンプルURLを1件も取得できませんでした。")
+    return voice_sample_groups
+
+
+def flatten_voice_sample_groups(voice_sample_groups: dict[str, list[str]]) -> list[str]:
+    """互換用の voice_samples を分類付きデータから作る。"""
+    voice_samples = []
+    for sample_urls in voice_sample_groups.values():
+        for sample_url in sample_urls:
+            if sample_url not in voice_samples:
+                voice_samples.append(sample_url)
     return voice_samples
 
 
@@ -109,10 +124,13 @@ def scrape_raccoon_dog_profile(url: str) -> dict:
 
     soup = BeautifulSoup(response.content, "html.parser")
     name = extract_name(soup)
+    voice_sample_groups = extract_voice_sample_groups(soup, response.url)
     return {
         name: {
+            "agency": AGENCY_NAME,
             "appearances": extract_appearances(soup),
-            "voice_samples": extract_voice_samples(soup, response.url),
+            "voice_sample_groups": voice_sample_groups,
+            "voice_samples": flatten_voice_sample_groups(voice_sample_groups),
         }
     }
 

@@ -1,10 +1,16 @@
 import json
+import sys
 from pathlib import Path
 
 import streamlit as st
 
 
 APP_DIR = Path(__file__).resolve().parent
+if str(APP_DIR) not in sys.path:
+    sys.path.insert(0, str(APP_DIR))
+
+from agency_rules import get_default_voice_sample_group
+
 VOICE_ACTORS = {
     "nanase_tsumugi": {
         "name": "七瀬 つむぎ",
@@ -61,6 +67,42 @@ def load_voice_analyses(analysis_path: Path | None) -> tuple[dict, dict]:
     analyses = analysis_data.get("voice_sample_analyses", {})
     failures = analysis_data.get("failed_samples", {})
     return analyses, failures
+
+
+def get_voice_sample_groups(
+    voice_actor_data: dict,
+    default_group_name: str = "サンプル",
+) -> dict[str, list[str]]:
+    """分類付きボイスサンプルを返す。旧形式の voice_samples も扱う。"""
+    voice_sample_groups = voice_actor_data.get("voice_sample_groups")
+    if isinstance(voice_sample_groups, dict):
+        groups = {
+            group_name: [
+                sample_url
+                for sample_url in sample_urls
+                if isinstance(sample_url, str) and sample_url.strip()
+            ]
+            for group_name, sample_urls in voice_sample_groups.items()
+            if isinstance(group_name, str) and isinstance(sample_urls, list)
+        }
+        groups = {
+            group_name: sample_urls
+            for group_name, sample_urls in groups.items()
+            if sample_urls
+        }
+        if groups:
+            return groups
+
+    voice_samples = voice_actor_data.get("voice_samples", [])
+    if not isinstance(voice_samples, list):
+        return {}
+
+    sample_urls = [
+        sample_url
+        for sample_url in voice_samples
+        if isinstance(sample_url, str) and sample_url.strip()
+    ]
+    return {default_group_name: sample_urls} if sample_urls else {}
 
 
 def show_actor_selection() -> None:
@@ -123,21 +165,28 @@ def show_actor_details(actor_id: str) -> None:
         st.info("出演歴のデータはありません。")
 
     st.subheader("🎧 ボイスサンプル")
-    voice_samples = voice_actor_data.get("voice_samples", [])
-    if voice_samples:
-        for index, sample_url in enumerate(voice_samples, start=1):
-            description = voice_analyses.get(sample_url)
-            failure_message = failed_samples.get(sample_url)
+    voice_sample_groups = get_voice_sample_groups(
+        voice_actor_data,
+        get_default_voice_sample_group(actor["agency"]),
+    )
+    if voice_sample_groups:
+        sample_index = 1
+        for group_name, sample_urls in voice_sample_groups.items():
+            st.markdown(f"### {group_name}")
+            for sample_url in sample_urls:
+                description = voice_analyses.get(sample_url)
+                failure_message = failed_samples.get(sample_url)
 
-            if description:
-                sample_title = f"サンプル{index}：{description}"
-            elif failure_message:
-                sample_title = f"サンプル{index}：解析失敗"
-            else:
-                sample_title = f"サンプル{index}：未解析"
+                if description:
+                    sample_title = f"サンプル{sample_index}：{description}"
+                elif failure_message:
+                    sample_title = f"サンプル{sample_index}：解析失敗"
+                else:
+                    sample_title = f"サンプル{sample_index}：未解析"
 
-            st.markdown(f"#### {sample_title}")
-            st.audio(sample_url)
+                st.markdown(f"#### {sample_title}")
+                st.audio(sample_url)
+                sample_index += 1
 
         if voice_analyses:
             st.caption(

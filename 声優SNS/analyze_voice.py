@@ -87,30 +87,57 @@ def load_voice_sample_urls(json_path: Path) -> tuple[str, list[str]]:
     if not isinstance(scraped_data, dict):
         raise ValueError("JSONのルートが辞書形式ではありません。")
 
-    if isinstance(scraped_data.get("voice_samples"), list):
+    if has_voice_samples(scraped_data):
         actor_name = json_path.stem.removesuffix("_data").replace("_", " ")
         actor_data = scraped_data
     else:
         candidates = [
             (name, data)
             for name, data in scraped_data.items()
-            if isinstance(data, dict) and isinstance(data.get("voice_samples"), list)
+            if isinstance(data, dict) and has_voice_samples(data)
         ]
         if len(candidates) != 1:
             raise ValueError(
                 "声優データを特定できません。"
-                "voice_samples を持つ声優を1人だけ格納してください。"
+                "voice_samples または voice_sample_groups を持つ声優を"
+                "1人だけ格納してください。"
             )
         actor_name, actor_data = candidates[0]
 
-    voice_samples = actor_data.get("voice_samples")
-    if not isinstance(voice_samples, list) or not voice_samples:
-        raise ValueError("JSONの voice_samples に解析対象のURLがありません。")
-
-    valid_urls = [url for url in voice_samples if isinstance(url, str) and url.strip()]
+    valid_urls = collect_voice_sample_urls(actor_data)
     if not valid_urls:
-        raise ValueError("voice_samples に有効なURLがありません。")
+        raise ValueError("解析対象のボイスサンプルURLがありません。")
     return actor_name, valid_urls
+
+
+def has_voice_samples(actor_data: dict) -> bool:
+    """旧形式または分類付き形式のボイスサンプルを持つか判定する。"""
+    return isinstance(actor_data.get("voice_samples"), list) or isinstance(
+        actor_data.get("voice_sample_groups"),
+        dict,
+    )
+
+
+def collect_voice_sample_urls(actor_data: dict) -> list[str]:
+    """分類の有無に関係なく、解析対象URLを重複なしで取り出す。"""
+    urls = []
+    voice_sample_groups = actor_data.get("voice_sample_groups")
+
+    if isinstance(voice_sample_groups, dict):
+        for sample_urls in voice_sample_groups.values():
+            if not isinstance(sample_urls, list):
+                continue
+            urls.extend(sample_urls)
+    else:
+        voice_samples = actor_data.get("voice_samples", [])
+        if isinstance(voice_samples, list):
+            urls.extend(voice_samples)
+
+    valid_urls = []
+    for url in urls:
+        if isinstance(url, str) and url.strip() and url not in valid_urls:
+            valid_urls.append(url)
+    return valid_urls
 
 
 def default_output_path(input_path: Path) -> Path:

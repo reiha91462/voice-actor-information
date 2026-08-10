@@ -1,5 +1,6 @@
 {
     "長谷川 育美": {
+        "agency": "ラクーンドッグ",
         "appearances": {
             "TVアニメ": [
                 "ぼっち・ざ・ろっく!（喜多郁代）",
@@ -111,6 +112,26 @@
                 "長谷川育美公式ラジオ（決）（AuDee）",
                 "石見舞菜香・長谷川育美のふたりば（BS11+）",
                 "長谷川育美・川井田夏美のなんにもしたくありません（OPENREC.tv/YouTube）"
+            ]
+        },
+        "voice_sample_groups": {
+            "まとめ": [
+                "https://www.raccoon-dog.co.jp/talent/vsample/r/hasegawa/hasegawa_all.mp3"
+            ],
+            "演技": [
+                "https://www.raccoon-dog.co.jp/talent/vsample/r/hasegawa/hasegawa_1.wav",
+                "https://www.raccoon-dog.co.jp/talent/vsample/r/hasegawa/hasegawa_2.wav",
+                "https://www.raccoon-dog.co.jp/talent/vsample/r/hasegawa/hasegawa_3.wav",
+                "https://www.raccoon-dog.co.jp/talent/vsample/r/hasegawa/hasegawa_4.wav",
+                "https://www.raccoon-dog.co.jp/talent/vsample/r/hasegawa/hasegawa_5.wav",
+                "https://www.raccoon-dog.co.jp/talent/vsample/r/hasegawa/hasegawa_6.wav",
+                "https://www.raccoon-dog.co.jp/talent/vsample/r/hasegawa/hasegawa_7.wav",
+                "https://www.raccoon-dog.co.jp/talent/vsample/r/hasegawa/hasegawa_8.wav",
+                "https://www.raccoon-dog.co.jp/talent/vsample/r/hasegawa/hasegawa_9.wav"
+            ],
+            "アナウンス": [
+                "https://www.raccoon-dog.co.jp/talent/vsample/r/hasegawa/hasegawa_na1.wav",
+                "https://www.raccoon-dog.co.jp/talent/vsample/r/hasegawa/hasegawa_na2.wav"
             ]
         },
         "voice_samples": [
