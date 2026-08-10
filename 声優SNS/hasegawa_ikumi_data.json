@@ -33,6 +33,7 @@
                 "profile_url": "https://x.com/Ikumi_Radio",
                 "label": "長谷川育美公式ラジオ（決）",
                 "kind": "program",
+                "featured_posts_embed_mode": "embed",
                 "featured_posts": [
                     {
                         "title": "初投稿",

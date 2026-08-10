@@ -34,6 +34,7 @@ VOICE_ACTORS = {
                 "profile_url": "https://x.com/tsumugi_nanase",
                 "label": "本人X",
                 "kind": "person",
+                "featured_posts_embed_mode": "embed",
                 "featured_posts": [
                     {
                         "title": "初投稿",
@@ -72,6 +73,7 @@ VOICE_ACTORS = {
                 "profile_url": "https://x.com/Ikumi_Radio",
                 "label": "長谷川育美公式ラジオ（決）",
                 "kind": "program",
+                "featured_posts_embed_mode": "embed",
                 "featured_posts": [
                     {
                         "title": "初投稿",
@@ -239,7 +241,8 @@ def show_social_links(social_links: dict) -> None:
 
     featured_posts = get_featured_twitter_posts(twitter)
     if featured_posts:
-        show_featured_twitter_posts(featured_posts)
+        embed_mode = str(twitter.get("featured_posts_embed_mode", "card")).strip()
+        show_featured_twitter_posts(featured_posts, embed_mode)
 
 
 def build_instagram_button_html(instagram: dict | None) -> str:
@@ -346,16 +349,43 @@ def get_featured_twitter_posts(twitter: dict | None) -> list[dict]:
     ]
 
 
-def show_featured_twitter_posts(posts: list[dict]) -> None:
+def show_featured_twitter_posts(posts: list[dict], embed_mode: str = "card") -> None:
     """Xのピックアップポストを横並びカードで表示する。"""
     st.markdown("#### ピックアップポスト")
     columns = st.columns(len(posts))
     for column, post in zip(columns, posts):
         with column:
-            st.markdown(
-                build_twitter_post_card_html(post),
-                unsafe_allow_html=True,
-            )
+            if embed_mode == "embed":
+                components.html(build_twitter_embed_html(post), height=430)
+            else:
+                st.markdown(
+                    build_twitter_post_card_html(post),
+                    unsafe_allow_html=True,
+                )
+
+
+def build_twitter_embed_html(post: dict) -> str:
+    """X公式の単体ポスト埋め込みHTMLを作る。"""
+    post_url = normalize_x_post_url(str(post.get("url", "")).strip())
+    if not post_url:
+        return build_twitter_post_card_html(post)
+
+    safe_url = escape(post_url, quote=True)
+    return f"""
+<blockquote class="twitter-tweet">
+  <a href="{safe_url}"></a>
+</blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+""".strip()
+
+
+def normalize_x_post_url(post_url: str) -> str:
+    """Xの投稿URLを公式埋め込みで扱いやすい形に整える。"""
+    if not post_url:
+        return ""
+    normalized = post_url.replace("https://x.com/", "https://twitter.com/")
+    normalized = normalized.split("?", 1)[0]
+    return normalized
 
 
 def build_twitter_post_card_html(post: dict) -> str:
