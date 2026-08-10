@@ -16,16 +16,20 @@ NUMBER_LABELS = ["①", "②", "③", "④", "⑤", "⑥", "⑦", "⑧", "⑨", 
 VOICE_ACTORS = {
     "nanase_tsumugi": {
         "name": "七瀬 つむぎ",
+        "roman_name": "Nanase Tsumugi",
         "sort_name": "ななせ つむぎ",
         "agency": "ホーリーピーク",
+        "representative_works": ["代表作A", "代表作B", "代表作C"],
         "data_path": APP_DIR / "nanase_tsumugi_data.json",
         "analysis_path": APP_DIR / "nanase_tsumugi_voice_analyses.json",
         "nested_key": None,
     },
     "hasegawa_ikumi": {
         "name": "長谷川 育美",
+        "roman_name": "Hasegawa Ikumi",
         "sort_name": "はせがわ いくみ",
         "agency": "ラクーンドッグ",
+        "representative_works": ["代表作A", "代表作B", "代表作C"],
         "data_path": APP_DIR / "hasegawa_ikumi_data.json",
         "analysis_path": APP_DIR / "hasegawa_ikumi_voice_analyses.json",
         "nested_key": "長谷川 育美",
@@ -144,9 +148,10 @@ def show_actor_details(actor_id: str) -> None:
         st.session_state.selected_voice_actor = None
         st.rerun()
 
-    st.title("🎙️ 声優情報")
-    st.header(actor["name"])
-    st.caption(f"所属事務所：{actor['agency']}")
+    st.title(f"{actor['name']}（{actor['roman_name']}）")
+    st.subheader("声優情報")
+    st.write(f"所属事務所：{actor['agency']}")
+    st.write(f"代表作：{', '.join(actor['representative_works'])}")
 
     try:
         voice_actor_data = load_voice_actor_data(actor)
