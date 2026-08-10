@@ -5,6 +5,9 @@ AGENCY_RULES = {
     "ホーリーピーク": {
         "default_voice_sample_group": "セリフ",
     },
+    "インテンション": {
+        "default_voice_sample_group": "セリフ",
+    },
     "ラクーンドッグ": {
         "default_voice_sample_group": "サンプル",
         "voice_filename_groups": {

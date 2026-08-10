@@ -62,6 +62,18 @@ VOICE_ACTORS = {
         "analysis_path": APP_DIR / "nanase_tsumugi_voice_analyses.json",
         "nested_key": None,
     },
+    "toyama_nao": {
+        "name": "東山 奈央",
+        "roman_name": "Toyama Nao",
+        "sort_name": "とうやま なお",
+        "agency": "インテンション",
+        "source_url": "https://intention-k.com/profile/nao_toyama",
+        "representative_works": [],
+        "social_links": {},
+        "data_path": APP_DIR / "toyama_nao_data.json",
+        "analysis_path": APP_DIR / "toyama_nao_voice_analyses.json",
+        "nested_key": "東山 奈央",
+    },
     "hasegawa_ikumi": {
         "name": "長谷川 育美",
         "roman_name": "Hasegawa Ikumi",
