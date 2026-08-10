@@ -185,7 +185,7 @@ def get_social_links(actor: dict, voice_actor_data: dict) -> dict:
 
 
 def show_social_links(social_links: dict) -> None:
-    """InstagramリンクとXタイムラインを表示する。"""
+    """InstagramとXの外部リンクボタンを表示する。"""
     if not isinstance(social_links, dict) or not social_links:
         return
 
@@ -196,18 +196,18 @@ def show_social_links(social_links: dict) -> None:
 
     st.subheader("SNS")
     instagram_html = build_instagram_button_html(instagram)
-    twitter_html = build_twitter_timeline_html(twitter)
+    twitter_html = build_twitter_button_html(twitter)
 
     if instagram_html and twitter_html:
-        left_column, right_column = st.columns([1, 2])
+        left_column, right_column = st.columns(2)
         with left_column:
             components.html(instagram_html, height=110)
         with right_column:
-            components.html(twitter_html, height=540)
+            components.html(twitter_html, height=110)
     elif instagram_html:
         components.html(instagram_html, height=110)
     elif twitter_html:
-        components.html(twitter_html, height=540)
+        components.html(twitter_html, height=110)
 
 
 def build_instagram_button_html(instagram: dict | None) -> str:
@@ -249,28 +249,42 @@ def build_instagram_button_html(instagram: dict | None) -> str:
 """.strip()
 
 
-def build_twitter_timeline_html(twitter: dict | None) -> str:
-    """X公式埋め込みタイムラインHTMLを作る。"""
+def build_twitter_button_html(twitter: dict | None) -> str:
+    """XプロフィールへのリンクボタンHTMLを作る。"""
     if not isinstance(twitter, dict):
         return ""
 
     username = str(twitter.get("username", "")).strip().lstrip("@")
-    if not username:
+    profile_url = str(twitter.get("profile_url", "")).strip()
+    if not profile_url and username:
+        profile_url = f"https://x.com/{username}"
+    if not profile_url:
         return ""
 
-    safe_username = escape(username, quote=True)
     label = str(twitter.get("label", "X")).strip() or "X"
+    safe_url = escape(profile_url, quote=True)
+    safe_username = escape(username)
     safe_label = escape(label)
+    account_label = f"@{safe_username}" if safe_username else "公式プロフィール"
     return f"""
-<div style="font-family: sans-serif; margin-bottom: 8px; font-weight: 700;">
-  {safe_label}
+<div style="font-family: sans-serif;">
+  <a href="{safe_url}" target="_blank" rel="noopener noreferrer"
+     style="
+       display: block;
+       padding: 18px 20px;
+       border-radius: 8px;
+       color: #fff;
+       text-decoration: none;
+       background: #111;
+       box-shadow: 0 4px 14px rgba(0, 0, 0, 0.16);
+     ">
+    <div style="font-size: 14px; opacity: 0.85;">{safe_label}</div>
+    <div style="font-size: 18px; font-weight: 700; margin-top: 4px;">
+      Xを見る
+    </div>
+    <div style="font-size: 13px; margin-top: 6px; opacity: 0.85;">{account_label}</div>
+  </a>
 </div>
-<a class="twitter-timeline"
-   data-height="500"
-   href="https://twitter.com/{safe_username}?ref_src=twsrc%5Etfw">
-  Tweets by {safe_username}
-</a>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 """.strip()
 
 
