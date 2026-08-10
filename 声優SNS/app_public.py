@@ -11,6 +11,8 @@ if str(APP_DIR) not in sys.path:
 
 from agency_rules import get_default_voice_sample_group
 
+NUMBER_LABELS = ["①", "②", "③", "④", "⑤", "⑥", "⑦", "⑧", "⑨", "⑩"]
+
 VOICE_ACTORS = {
     "nanase_tsumugi": {
         "name": "七瀬 つむぎ",
@@ -105,6 +107,13 @@ def get_voice_sample_groups(
     return {default_group_name: sample_urls} if sample_urls else {}
 
 
+def format_sample_number(index: int) -> str:
+    """ボイス分類内の番号を表示用に整える。"""
+    if index <= len(NUMBER_LABELS):
+        return NUMBER_LABELS[index - 1]
+    return f"{index}."
+
+
 def show_actor_selection() -> None:
     """最初の声優選択画面を表示する。"""
     st.title("🎙️ 声優情報")
@@ -170,23 +179,22 @@ def show_actor_details(actor_id: str) -> None:
         get_default_voice_sample_group(actor["agency"]),
     )
     if voice_sample_groups:
-        sample_index = 1
         for group_name, sample_urls in voice_sample_groups.items():
             st.markdown(f"### {group_name}")
-            for sample_url in sample_urls:
+            for sample_index, sample_url in enumerate(sample_urls, start=1):
                 description = voice_analyses.get(sample_url)
                 failure_message = failed_samples.get(sample_url)
+                sample_number = format_sample_number(sample_index)
 
                 if description:
-                    sample_title = f"サンプル{sample_index}：{description}"
+                    sample_title = f"{sample_number}{description}"
                 elif failure_message:
-                    sample_title = f"サンプル{sample_index}：解析失敗"
+                    sample_title = f"{sample_number}解析失敗"
                 else:
-                    sample_title = f"サンプル{sample_index}：未解析"
+                    sample_title = f"{sample_number}未解析"
 
                 st.markdown(f"#### {sample_title}")
                 st.audio(sample_url)
-                sample_index += 1
 
         if voice_analyses:
             st.caption(

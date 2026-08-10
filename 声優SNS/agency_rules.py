@@ -3,14 +3,15 @@ from pathlib import Path
 
 AGENCY_RULES = {
     "ホーリーピーク": {
-        "default_voice_sample_group": "演技",
+        "default_voice_sample_group": "セリフ",
     },
     "ラクーンドッグ": {
         "default_voice_sample_group": "サンプル",
         "voice_filename_groups": {
-            "_na": "アナウンス",
+            "_all": "まとめボイス",
+            "_na": "ナレーション",
         },
-        "fallback_voice_sample_group": "演技",
+        "fallback_voice_sample_group": "セリフ",
     },
 }
 

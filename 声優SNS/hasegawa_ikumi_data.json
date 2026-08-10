@@ -115,8 +115,10 @@
             ]
         },
         "voice_sample_groups": {
-            "演技": [
-                "https://www.raccoon-dog.co.jp/talent/vsample/r/hasegawa/hasegawa_all.mp3",
+            "まとめボイス": [
+                "https://www.raccoon-dog.co.jp/talent/vsample/r/hasegawa/hasegawa_all.mp3"
+            ],
+            "セリフ": [
                 "https://www.raccoon-dog.co.jp/talent/vsample/r/hasegawa/hasegawa_1.wav",
                 "https://www.raccoon-dog.co.jp/talent/vsample/r/hasegawa/hasegawa_2.wav",
                 "https://www.raccoon-dog.co.jp/talent/vsample/r/hasegawa/hasegawa_3.wav",
@@ -127,7 +129,7 @@
                 "https://www.raccoon-dog.co.jp/talent/vsample/r/hasegawa/hasegawa_8.wav",
                 "https://www.raccoon-dog.co.jp/talent/vsample/r/hasegawa/hasegawa_9.wav"
             ],
-            "アナウンス": [
+            "ナレーション": [
                 "https://www.raccoon-dog.co.jp/talent/vsample/r/hasegawa/hasegawa_na1.wav",
                 "https://www.raccoon-dog.co.jp/talent/vsample/r/hasegawa/hasegawa_na2.wav"
             ]
