@@ -27,6 +27,14 @@
                 "wikipedia_title": "ソアラと魔物の家"
             }
         ],
+        "social_links": {
+            "twitter": {
+                "username": "Ikumi_Radio",
+                "profile_url": "https://x.com/Ikumi_Radio",
+                "label": "長谷川育美公式ラジオ（決）",
+                "kind": "program"
+            }
+        },
         "appearances": {
             "TVアニメ": [
                 "ぼっち・ざ・ろっく!（喜多郁代）",

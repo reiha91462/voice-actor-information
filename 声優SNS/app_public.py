@@ -1,8 +1,10 @@
 import json
 import sys
+from html import escape
 from pathlib import Path
 
 import streamlit as st
+import streamlit.components.v1 as components
 
 
 APP_DIR = Path(__file__).resolve().parent
@@ -26,6 +28,20 @@ VOICE_ACTORS = {
                 "character": "有村麻央",
             }
         ],
+        "social_links": {
+            "twitter": {
+                "username": "tsumugi_nanase",
+                "profile_url": "https://x.com/tsumugi_nanase",
+                "label": "本人X",
+                "kind": "person",
+            },
+            "instagram": {
+                "username": "nanase_tsumugi.61",
+                "profile_url": "https://www.instagram.com/nanase_tsumugi.61/?hl=ja",
+                "label": "本人Instagram",
+                "kind": "person",
+            },
+        },
         "data_path": APP_DIR / "nanase_tsumugi_data.json",
         "analysis_path": APP_DIR / "nanase_tsumugi_voice_analyses.json",
         "nested_key": None,
@@ -36,6 +52,14 @@ VOICE_ACTORS = {
         "sort_name": "はせがわ いくみ",
         "agency": "ラクーンドッグ",
         "representative_works": [],
+        "social_links": {
+            "twitter": {
+                "username": "Ikumi_Radio",
+                "profile_url": "https://x.com/Ikumi_Radio",
+                "label": "長谷川育美公式ラジオ（決）",
+                "kind": "program",
+            }
+        },
         "data_path": APP_DIR / "hasegawa_ikumi_data.json",
         "analysis_path": APP_DIR / "hasegawa_ikumi_voice_analyses.json",
         "nested_key": "長谷川 育美",
@@ -152,6 +176,104 @@ def format_representative_work(work: dict) -> str:
     return f"{label} / {category}" if category else label
 
 
+def get_social_links(actor: dict, voice_actor_data: dict) -> dict:
+    """JSONに保存されたSNS情報を優先して返す。"""
+    social_links = voice_actor_data.get("social_links")
+    if isinstance(social_links, dict) and social_links:
+        return social_links
+    return actor.get("social_links", {})
+
+
+def show_social_links(social_links: dict) -> None:
+    """InstagramリンクとXタイムラインを表示する。"""
+    if not isinstance(social_links, dict) or not social_links:
+        return
+
+    instagram = social_links.get("instagram")
+    twitter = social_links.get("twitter") or social_links.get("x")
+    if not instagram and not twitter:
+        return
+
+    st.subheader("SNS")
+    instagram_html = build_instagram_button_html(instagram)
+    twitter_html = build_twitter_timeline_html(twitter)
+
+    if instagram_html and twitter_html:
+        left_column, right_column = st.columns([1, 2])
+        with left_column:
+            components.html(instagram_html, height=110)
+        with right_column:
+            components.html(twitter_html, height=540)
+    elif instagram_html:
+        components.html(instagram_html, height=110)
+    elif twitter_html:
+        components.html(twitter_html, height=540)
+
+
+def build_instagram_button_html(instagram: dict | None) -> str:
+    """InstagramプロフィールへのリンクボタンHTMLを作る。"""
+    if not isinstance(instagram, dict):
+        return ""
+
+    username = str(instagram.get("username", "")).strip().lstrip("@")
+    label = str(instagram.get("label", "Instagram")).strip() or "Instagram"
+    profile_url = str(instagram.get("profile_url", "")).strip()
+    if not profile_url and username:
+        profile_url = f"https://www.instagram.com/{username}/"
+    if not profile_url:
+        return ""
+
+    safe_url = escape(profile_url, quote=True)
+    safe_username = escape(username)
+    safe_label = escape(label)
+    account_label = f"@{safe_username}" if safe_username else "公式プロフィール"
+    return f"""
+<div style="font-family: sans-serif;">
+  <a href="{safe_url}" target="_blank" rel="noopener noreferrer"
+     style="
+       display: block;
+       padding: 18px 20px;
+       border-radius: 8px;
+       color: #fff;
+       text-decoration: none;
+       background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af);
+       box-shadow: 0 4px 14px rgba(0, 0, 0, 0.16);
+     ">
+    <div style="font-size: 14px; opacity: 0.9;">{safe_label}</div>
+    <div style="font-size: 18px; font-weight: 700; margin-top: 4px;">
+      Instagramを見る
+    </div>
+    <div style="font-size: 13px; margin-top: 6px; opacity: 0.9;">{account_label}</div>
+  </a>
+</div>
+""".strip()
+
+
+def build_twitter_timeline_html(twitter: dict | None) -> str:
+    """X公式埋め込みタイムラインHTMLを作る。"""
+    if not isinstance(twitter, dict):
+        return ""
+
+    username = str(twitter.get("username", "")).strip().lstrip("@")
+    if not username:
+        return ""
+
+    safe_username = escape(username, quote=True)
+    label = str(twitter.get("label", "X")).strip() or "X"
+    safe_label = escape(label)
+    return f"""
+<div style="font-family: sans-serif; margin-bottom: 8px; font-weight: 700;">
+  {safe_label}
+</div>
+<a class="twitter-timeline"
+   data-height="500"
+   href="https://twitter.com/{safe_username}?ref_src=twsrc%5Etfw">
+  Tweets by {safe_username}
+</a>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+""".strip()
+
+
 def show_actor_selection() -> None:
     """最初の声優選択画面を表示する。"""
     st.title("🎙️ 声優情報")
@@ -192,6 +314,7 @@ def show_actor_details(actor_id: str) -> None:
         st.stop()
 
     representative_works = get_representative_works(actor, voice_actor_data)
+    social_links = get_social_links(actor, voice_actor_data)
 
     st.title(f"{actor['name']}（{actor['roman_name']}）")
     st.subheader("声優情報")
@@ -202,6 +325,7 @@ def show_actor_details(actor_id: str) -> None:
             st.write(f"- {format_representative_work(work)}")
     else:
         st.write("代表作：未設定")
+    show_social_links(social_links)
 
     try:
         voice_analyses, failed_samples = load_voice_analyses(actor["analysis_path"])
