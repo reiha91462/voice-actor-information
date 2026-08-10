@@ -34,6 +34,20 @@ VOICE_ACTORS = {
                 "profile_url": "https://x.com/tsumugi_nanase",
                 "label": "本人X",
                 "kind": "person",
+                "featured_posts": [
+                    {
+                        "title": "初投稿",
+                        "url": "https://x.com/tsumugi_nanase/status/1780557242510766468?s=20",
+                    },
+                    {
+                        "title": "セレクト投稿 1",
+                        "url": "https://x.com/tsumugi_nanase/status/1885948979864842319?s=20",
+                    },
+                    {
+                        "title": "セレクト投稿 2",
+                        "url": "https://x.com/tsumugi_nanase/status/2063601199895716009?s=20",
+                    },
+                ],
             },
             "instagram": {
                 "username": "nanase_tsumugi.61",
@@ -58,6 +72,20 @@ VOICE_ACTORS = {
                 "profile_url": "https://x.com/Ikumi_Radio",
                 "label": "長谷川育美公式ラジオ（決）",
                 "kind": "program",
+                "featured_posts": [
+                    {
+                        "title": "初投稿",
+                        "url": "https://x.com/Ikumi_Radio/status/1818889443539140989?s=20",
+                    },
+                    {
+                        "title": "セレクト投稿 1",
+                        "url": "https://x.com/Ikumi_Radio/status/1879111718166831225?s=20",
+                    },
+                    {
+                        "title": "セレクト投稿 2",
+                        "url": "https://x.com/Ikumi_Radio/status/1924773343443448064?s=20",
+                    },
+                ],
             }
         },
         "data_path": APP_DIR / "hasegawa_ikumi_data.json",
@@ -185,7 +213,7 @@ def get_social_links(actor: dict, voice_actor_data: dict) -> dict:
 
 
 def show_social_links(social_links: dict) -> None:
-    """InstagramとXの外部リンクボタンを表示する。"""
+    """InstagramとXの外部リンクボタン、直近ポストを表示する。"""
     if not isinstance(social_links, dict) or not social_links:
         return
 
@@ -208,6 +236,10 @@ def show_social_links(social_links: dict) -> None:
         components.html(instagram_html, height=110)
     elif twitter_html:
         components.html(twitter_html, height=110)
+
+    featured_posts = get_featured_twitter_posts(twitter)
+    if featured_posts:
+        show_featured_twitter_posts(featured_posts)
 
 
 def build_instagram_button_html(instagram: dict | None) -> str:
@@ -284,6 +316,93 @@ def build_twitter_button_html(twitter: dict | None) -> str:
     </div>
     <div style="font-size: 13px; margin-top: 6px; opacity: 0.85;">{account_label}</div>
   </a>
+</div>
+""".strip()
+
+
+def get_featured_twitter_posts(twitter: dict | None) -> list[dict]:
+    """Xのピックアップポスト表示用データを最大3件返す。"""
+    if not isinstance(twitter, dict):
+        return []
+
+    posts = (
+        twitter.get("featured_posts")
+        or twitter.get("recent_posts")
+        or twitter.get("recent_tweets")
+        or []
+    )
+    if not isinstance(posts, list):
+        return []
+
+    return [
+        post
+        for post in posts[:3]
+        if isinstance(post, dict)
+        and (
+            str(post.get("text", "")).strip()
+            or str(post.get("title", "")).strip()
+            or str(post.get("url", "")).strip()
+        )
+    ]
+
+
+def show_featured_twitter_posts(posts: list[dict]) -> None:
+    """Xのピックアップポストを横並びカードで表示する。"""
+    st.markdown("#### ピックアップポスト")
+    columns = st.columns(len(posts))
+    for column, post in zip(columns, posts):
+        with column:
+            st.markdown(
+                build_twitter_post_card_html(post),
+                unsafe_allow_html=True,
+            )
+
+
+def build_twitter_post_card_html(post: dict) -> str:
+    """XポストカードHTMLを作る。"""
+    text = escape(str(post.get("text", "")).strip())
+    title = escape(str(post.get("title", "")).strip() or "ピックアップポスト")
+    posted_at = escape(str(post.get("posted_at", "")).strip())
+    post_url = str(post.get("url", "")).strip()
+    safe_url = escape(post_url, quote=True)
+
+    footer = posted_at if posted_at else "X"
+    if safe_url:
+        footer_html = (
+            f'<a href="{safe_url}" target="_blank" rel="noopener noreferrer" '
+            'style="color: #111; text-decoration: none; font-weight: 700;">'
+            f"{footer} を開く</a>"
+        )
+    else:
+        footer_html = footer
+
+    return f"""
+<div style="
+  min-height: 132px;
+  padding: 16px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+">
+  <div style="
+    color: #111827;
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  ">{title}</div>
+  <div style="
+    color: #111827;
+    font-size: 14px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  ">{text if text else "選んだポストをXで開く"}</div>
+  <div style="
+    margin-top: 14px;
+    color: #6b7280;
+    font-size: 12px;
+  ">{footer_html}</div>
 </div>
 """.strip()
 

@@ -32,7 +32,21 @@
                 "username": "Ikumi_Radio",
                 "profile_url": "https://x.com/Ikumi_Radio",
                 "label": "長谷川育美公式ラジオ（決）",
-                "kind": "program"
+                "kind": "program",
+                "featured_posts": [
+                    {
+                        "title": "初投稿",
+                        "url": "https://x.com/Ikumi_Radio/status/1818889443539140989?s=20"
+                    },
+                    {
+                        "title": "セレクト投稿 1",
+                        "url": "https://x.com/Ikumi_Radio/status/1879111718166831225?s=20"
+                    },
+                    {
+                        "title": "セレクト投稿 2",
+                        "url": "https://x.com/Ikumi_Radio/status/1924773343443448064?s=20"
+                    }
+                ]
             }
         },
         "appearances": {
