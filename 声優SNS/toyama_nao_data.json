@@ -20,6 +20,10 @@
             }
         ],
         "social_links": {
+            "website": {
+                "profile_url": "https://toyamanao.com/",
+                "label": "本人公式サイト"
+            },
             "twitter": {
                 "username": "naobou_official",
                 "profile_url": "https://x.com/naobou_official",

@@ -244,28 +244,37 @@ def get_source_url(actor: dict, voice_actor_data: dict) -> str:
     return str(source_url).strip()
 
 
-def show_social_links(social_links: dict) -> None:
-    """本人サイト、SNS、ピックアップポスト、YouTubeを表示する。"""
+def show_official_website(social_links: dict) -> None:
+    """本人公式サイトへのリンクを表示する。"""
     if not isinstance(social_links, dict) or not social_links:
         return
 
     website = social_links.get("website") or social_links.get("homepage")
+    website_html = build_generic_link_button_html(
+        website,
+        default_label="本人公式サイト",
+        action_label="公式サイトを見る",
+        background="#2563eb",
+    )
+    if not website_html:
+        return
+
+    st.markdown("#### 公式サイト")
+    components.html(website_html, height=105)
+
+
+def show_social_links(social_links: dict) -> None:
+    """SNS、YouTube、ピックアップポストを表示する。"""
+    if not isinstance(social_links, dict) or not social_links:
+        return
+
     instagram = social_links.get("instagram")
     twitter = social_links.get("twitter") or social_links.get("x")
     youtube = social_links.get("youtube")
-    if not website and not instagram and not twitter and not youtube:
+    if not instagram and not twitter and not youtube:
         return
 
     st.subheader("SNS")
-    website_html = build_generic_link_button_html(
-        website,
-        default_label="本人ホームページ",
-        action_label="ホームページを見る",
-        background="#2563eb",
-    )
-    if website_html:
-        components.html(website_html, height=105)
-
     sns_buttons = [
         build_instagram_button_html(instagram),
         build_twitter_button_html(twitter),
@@ -277,11 +286,6 @@ def show_social_links(social_links: dict) -> None:
             with column:
                 components.html(button_html, height=110)
 
-    featured_posts = get_featured_twitter_posts(twitter)
-    if featured_posts:
-        embed_mode = str(twitter.get("featured_posts_embed_mode", "card")).strip()
-        show_featured_twitter_posts(featured_posts, embed_mode)
-
     youtube_html = build_generic_link_button_html(
         youtube,
         default_label="YouTube",
@@ -290,6 +294,11 @@ def show_social_links(social_links: dict) -> None:
     )
     if youtube_html:
         components.html(youtube_html, height=105)
+
+    featured_posts = get_featured_twitter_posts(twitter)
+    if featured_posts:
+        embed_mode = str(twitter.get("featured_posts_embed_mode", "card")).strip()
+        show_featured_twitter_posts(featured_posts, embed_mode)
 
 
 def build_instagram_button_html(instagram: dict | None) -> str:
@@ -581,6 +590,7 @@ def show_actor_details(actor_id: str) -> None:
             st.write(f"- {format_representative_work(work)}")
     else:
         st.write("代表作：未設定")
+    show_official_website(social_links)
     show_social_links(social_links)
 
     try:
