@@ -14,6 +14,7 @@ from google.genai import errors
 MODEL_NAME = "gemini-3.6-flash"
 SCRIPT_DIR = Path(__file__).resolve().parent
 DEFAULT_INPUT_PATH = SCRIPT_DIR / "nanase_tsumugi_data.json"
+SKIP_ANALYSIS_GROUPS = {"まとめ", "まとめボイス", "クレジット"}
 PROMPT = """
 あなたはプロの音響監督です。
 添付したボイスサンプルを聞き、声質と想定されるキャラクターの雰囲気を分析してください。
@@ -124,7 +125,9 @@ def collect_voice_sample_urls(actor_data: dict) -> list[str]:
     voice_sample_groups = actor_data.get("voice_sample_groups")
 
     if isinstance(voice_sample_groups, dict):
-        for sample_urls in voice_sample_groups.values():
+        for group_name, sample_urls in voice_sample_groups.items():
+            if isinstance(group_name, str) and group_name.strip() in SKIP_ANALYSIS_GROUPS:
+                continue
             if not isinstance(sample_urls, list):
                 continue
             urls.extend(sample_urls)

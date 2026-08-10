@@ -192,6 +192,16 @@ def format_sample_number(index: int) -> str:
     return f"{index}."
 
 
+def get_fixed_voice_sample_title(group_name: str) -> str | None:
+    """AI解析せず固定表示にするボイス分類の説明を返す。"""
+    normalized_group_name = group_name.strip()
+    if normalized_group_name in {"まとめ", "まとめボイス"}:
+        return "自己紹介+全て"
+    if normalized_group_name == "クレジット":
+        return "自己紹介"
+    return None
+
+
 def get_representative_works(actor: dict, voice_actor_data: dict) -> list[dict]:
     """JSONに保存された代表作を優先して返す。"""
     representative_works = voice_actor_data.get("representative_works")
@@ -598,6 +608,12 @@ def show_actor_details(actor_id: str) -> None:
         for group_name, sample_urls in voice_sample_groups.items():
             st.markdown(f"### {group_name}")
             for sample_index, sample_url in enumerate(sample_urls, start=1):
+                fixed_sample_title = get_fixed_voice_sample_title(group_name)
+                if fixed_sample_title is not None:
+                    st.markdown(f"#### {fixed_sample_title}")
+                    st.audio(sample_url)
+                    continue
+
                 description = voice_analyses.get(sample_url)
                 failure_message = failed_samples.get(sample_url)
                 sample_number = format_sample_number(sample_index)
