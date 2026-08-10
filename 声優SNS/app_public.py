@@ -192,6 +192,13 @@ def format_sample_number(index: int) -> str:
     return f"{index}."
 
 
+def format_sample_title_prefix(sample_index: int, sample_count: int) -> str:
+    """同じ分類に複数サンプルがある場合だけ番号を付ける。"""
+    if sample_count <= 1:
+        return ""
+    return format_sample_number(sample_index)
+
+
 def get_fixed_voice_sample_title(group_name: str) -> str | None:
     """AI解析せず固定表示にするボイス分類の説明を返す。"""
     normalized_group_name = group_name.strip()
@@ -541,7 +548,7 @@ def build_twitter_post_card_html(post: dict) -> str:
 def show_actor_selection() -> None:
     """最初の声優選択画面を表示する。"""
     st.title("🎙️ 声優情報")
-    st.write("出演歴やボイスサンプルを見たい声優を選択してください。")
+    st.write("好きな声優を選択してください。")
 
     sorted_actor_ids = sorted(
         VOICE_ACTORS,
@@ -617,6 +624,7 @@ def show_actor_details(actor_id: str) -> None:
     if voice_sample_groups:
         for group_name, sample_urls in voice_sample_groups.items():
             st.markdown(f"### {group_name}")
+            sample_count = len(sample_urls)
             for sample_index, sample_url in enumerate(sample_urls, start=1):
                 fixed_sample_title = get_fixed_voice_sample_title(group_name)
                 if fixed_sample_title is not None:
@@ -626,14 +634,14 @@ def show_actor_details(actor_id: str) -> None:
 
                 description = voice_analyses.get(sample_url)
                 failure_message = failed_samples.get(sample_url)
-                sample_number = format_sample_number(sample_index)
+                sample_title_prefix = format_sample_title_prefix(sample_index, sample_count)
 
                 if description:
-                    sample_title = f"{sample_number}{description}"
+                    sample_title = f"{sample_title_prefix}{description}"
                 elif failure_message:
-                    sample_title = f"{sample_number}解析失敗"
+                    sample_title = f"{sample_title_prefix}解析失敗"
                 else:
-                    sample_title = f"{sample_number}未解析"
+                    sample_title = f"{sample_title_prefix}未解析"
 
                 st.markdown(f"#### {sample_title}")
                 st.audio(sample_url)
