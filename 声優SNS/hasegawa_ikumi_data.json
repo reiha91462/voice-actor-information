@@ -1,6 +1,32 @@
 {
     "長谷川 育美": {
         "agency": "ラクーンドッグ",
+        "representative_works": [
+            {
+                "category": "アニメ",
+                "title": "ぼっち・ざ・ろっく!",
+                "character": "喜多郁代",
+                "source": "official_site_and_wikipedia_bold",
+                "official": "ぼっち・ざ・ろっく!（喜多郁代）",
+                "wikipedia_title": "ぼっち・ざ・ろっく！"
+            },
+            {
+                "category": "アニメ",
+                "title": "ヴィジランテ-僕のヒーローアカデミアILLEGALS-",
+                "character": "ポップ☆ステップ",
+                "source": "official_site_and_wikipedia_bold",
+                "official": "ヴィジランテ-僕のヒーローアカデミアILLEGALS-（ポップ☆ステップ）",
+                "wikipedia_title": "ヴィジランテ-僕のヒーローアカデミア ILLEGALS-"
+            },
+            {
+                "category": "アニメ",
+                "title": "ソアラと魔物の家",
+                "character": "ソアラ",
+                "source": "official_site_and_wikipedia_bold",
+                "official": "ソアラと魔物の家（ソアラ）",
+                "wikipedia_title": "ソアラと魔物の家"
+            }
+        ],
         "appearances": {
             "TVアニメ": [
                 "ぼっち・ざ・ろっく!（喜多郁代）",

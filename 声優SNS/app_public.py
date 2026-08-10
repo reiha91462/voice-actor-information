@@ -19,7 +19,13 @@ VOICE_ACTORS = {
         "roman_name": "Nanase Tsumugi",
         "sort_name": "ななせ つむぎ",
         "agency": "ホーリーピーク",
-        "representative_works": ["代表作A", "代表作B", "代表作C"],
+        "representative_works": [
+            {
+                "category": "ゲーム",
+                "title": "学園アイドルマスター",
+                "character": "有村麻央",
+            }
+        ],
         "data_path": APP_DIR / "nanase_tsumugi_data.json",
         "analysis_path": APP_DIR / "nanase_tsumugi_voice_analyses.json",
         "nested_key": None,
@@ -29,7 +35,7 @@ VOICE_ACTORS = {
         "roman_name": "Hasegawa Ikumi",
         "sort_name": "はせがわ いくみ",
         "agency": "ラクーンドッグ",
-        "representative_works": ["代表作A", "代表作B", "代表作C"],
+        "representative_works": [],
         "data_path": APP_DIR / "hasegawa_ikumi_data.json",
         "analysis_path": APP_DIR / "hasegawa_ikumi_voice_analyses.json",
         "nested_key": "長谷川 育美",
@@ -118,6 +124,34 @@ def format_sample_number(index: int) -> str:
     return f"{index}."
 
 
+def get_representative_works(actor: dict, voice_actor_data: dict) -> list[dict]:
+    """JSONに保存された代表作を優先して返す。"""
+    representative_works = voice_actor_data.get("representative_works")
+    if isinstance(representative_works, list) and representative_works:
+        return [
+            work
+            for work in representative_works[:3]
+            if isinstance(work, dict) and work.get("title")
+        ]
+
+    fallback_works = actor.get("representative_works", [])
+    return [
+        work
+        for work in fallback_works[:3]
+        if isinstance(work, dict) and work.get("title")
+    ]
+
+
+def format_representative_work(work: dict) -> str:
+    """代表作を表示用の1行に整える。"""
+    title = work.get("title", "")
+    character = work.get("character", "")
+    category = work.get("category", "")
+
+    label = f"{title}（{character}）" if character else title
+    return f"{label} / {category}" if category else label
+
+
 def show_actor_selection() -> None:
     """最初の声優選択画面を表示する。"""
     st.title("🎙️ 声優情報")
@@ -148,11 +182,6 @@ def show_actor_details(actor_id: str) -> None:
         st.session_state.selected_voice_actor = None
         st.rerun()
 
-    st.title(f"{actor['name']}（{actor['roman_name']}）")
-    st.subheader("声優情報")
-    st.write(f"所属事務所：{actor['agency']}")
-    st.write(f"代表作：{', '.join(actor['representative_works'])}")
-
     try:
         voice_actor_data = load_voice_actor_data(actor)
     except FileNotFoundError:
@@ -161,6 +190,18 @@ def show_actor_details(actor_id: str) -> None:
     except (json.JSONDecodeError, UnicodeDecodeError, ValueError) as error:
         st.error(f"声優データの読み込みに失敗しました: {error}")
         st.stop()
+
+    representative_works = get_representative_works(actor, voice_actor_data)
+
+    st.title(f"{actor['name']}（{actor['roman_name']}）")
+    st.subheader("声優情報")
+    st.write(f"所属事務所：{actor['agency']}")
+    if representative_works:
+        st.write("代表作：")
+        for work in representative_works:
+            st.write(f"- {format_representative_work(work)}")
+    else:
+        st.write("代表作：未設定")
 
     try:
         voice_analyses, failed_samples = load_voice_analyses(actor["analysis_path"])
