@@ -209,6 +209,24 @@ def get_fixed_voice_sample_title(group_name: str) -> str | None:
     return None
 
 
+def show_voice_sample_title(sample_title: str) -> None:
+    """各ボイスサンプルの説明を、分類見出しより小さく表示する。"""
+    safe_sample_title = escape(sample_title)
+    st.markdown(
+        f"""
+<div style="
+  font-size: 0.98rem;
+  font-weight: 600;
+  line-height: 1.5;
+  margin: 0.35rem 0 0.25rem;
+">
+  {safe_sample_title}
+</div>
+""".strip(),
+        unsafe_allow_html=True,
+    )
+
+
 def get_representative_works(actor: dict, voice_actor_data: dict) -> list[dict]:
     """JSONに保存された代表作を優先して返す。"""
     representative_works = voice_actor_data.get("representative_works")
@@ -628,7 +646,7 @@ def show_actor_details(actor_id: str) -> None:
             for sample_index, sample_url in enumerate(sample_urls, start=1):
                 fixed_sample_title = get_fixed_voice_sample_title(group_name)
                 if fixed_sample_title is not None:
-                    st.markdown(f"#### {fixed_sample_title}")
+                    show_voice_sample_title(fixed_sample_title)
                     st.audio(sample_url)
                     continue
 
@@ -643,7 +661,7 @@ def show_actor_details(actor_id: str) -> None:
                 else:
                     sample_title = f"{sample_title_prefix}未解析"
 
-                st.markdown(f"#### {sample_title}")
+                show_voice_sample_title(sample_title)
                 st.audio(sample_url)
 
         if voice_analyses:
