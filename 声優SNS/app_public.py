@@ -14,12 +14,14 @@ if str(APP_DIR) not in sys.path:
 from agency_rules import get_default_voice_sample_group
 
 NUMBER_LABELS = ["①", "②", "③", "④", "⑤", "⑥", "⑦", "⑧", "⑨", "⑩"]
+GENDER_SECTIONS = ["女性声優", "男性声優"]
 
 VOICE_ACTORS = {
     "nanase_tsumugi": {
         "name": "七瀬 つむぎ",
         "roman_name": "Nanase Tsumugi",
         "sort_name": "ななせ つむぎ",
+        "gender": "女性声優",
         "agency": "ホーリーピーク",
         "source_url": "https://holypeak.com/talent/voice-actor-women/%e4%b8%83%e7%80%ac-%e3%81%a4%e3%82%80%e3%81%8e/",
         "representative_works": [
@@ -66,6 +68,7 @@ VOICE_ACTORS = {
         "name": "東山 奈央",
         "roman_name": "Toyama Nao",
         "sort_name": "とうやま なお",
+        "gender": "女性声優",
         "agency": "インテンション",
         "source_url": "https://intention-k.com/profile/nao_toyama",
         "representative_works": [],
@@ -78,6 +81,7 @@ VOICE_ACTORS = {
         "name": "中村 悠一",
         "roman_name": "Nakamura Yuichi",
         "sort_name": "なかむら ゆういち",
+        "gender": "男性声優",
         "agency": "インテンション",
         "source_url": "https://intention-k.com/profile/yuichi_nakamura",
         "representative_works": [],
@@ -90,6 +94,7 @@ VOICE_ACTORS = {
         "name": "長谷川 育美",
         "roman_name": "Hasegawa Ikumi",
         "sort_name": "はせがわ いくみ",
+        "gender": "女性声優",
         "agency": "ラクーンドッグ",
         "source_url": "https://www.raccoon-dog.co.jp/talent/r11-hasegawa.html",
         "representative_works": [],
@@ -598,21 +603,29 @@ def show_actor_selection() -> None:
     st.title("🎙️ 声優情報")
     st.write("好きな声優を選択してください。")
 
-    sorted_actor_ids = sorted(
-        VOICE_ACTORS,
-        key=lambda key: VOICE_ACTORS[key].get("sort_name", VOICE_ACTORS[key]["name"]),
-    )
+    for gender in GENDER_SECTIONS:
+        actor_ids = sorted(
+            [
+                actor_id
+                for actor_id, actor in VOICE_ACTORS.items()
+                if actor.get("gender") == gender
+            ],
+            key=lambda key: VOICE_ACTORS[key].get("sort_name", VOICE_ACTORS[key]["name"]),
+        )
+        if not actor_ids:
+            continue
 
-    for actor_id in sorted_actor_ids:
-        actor = VOICE_ACTORS[actor_id]
-        if st.button(
-            actor["name"],
-            key=f"select_{actor_id}",
-            help=f"{actor['agency']} 所属",
-            use_container_width=True,
-        ):
-            st.session_state.selected_voice_actor = actor_id
-            st.rerun()
+        st.subheader(gender)
+        for actor_id in actor_ids:
+            actor = VOICE_ACTORS[actor_id]
+            if st.button(
+                actor["name"],
+                key=f"select_{actor_id}",
+                help=f"{actor['agency']} 所属",
+                use_container_width=True,
+            ):
+                st.session_state.selected_voice_actor = actor_id
+                st.rerun()
 
 
 def show_actor_details(actor_id: str) -> None:
