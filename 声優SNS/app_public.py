@@ -74,6 +74,18 @@ VOICE_ACTORS = {
         "analysis_path": APP_DIR / "toyama_nao_voice_analyses.json",
         "nested_key": "東山 奈央",
     },
+    "nakamura_yuichi": {
+        "name": "中村 悠一",
+        "roman_name": "Nakamura Yuichi",
+        "sort_name": "なかむら ゆういち",
+        "agency": "インテンション",
+        "source_url": "https://intention-k.com/profile/yuichi_nakamura",
+        "representative_works": [],
+        "social_links": {},
+        "data_path": APP_DIR / "nakamura_yuichi_data.json",
+        "analysis_path": APP_DIR / "nakamura_yuichi_voice_analyses.json",
+        "nested_key": "中村 悠一",
+    },
     "hasegawa_ikumi": {
         "name": "長谷川 育美",
         "roman_name": "Hasegawa Ikumi",

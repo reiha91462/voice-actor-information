@@ -1,0 +1,198 @@
+{
+    "中村 悠一": {
+        "agency": "インテンション",
+        "source_url": "https://intention-k.com/profile/yuichi_nakamura",
+        "representative_works": [
+            {
+                "category": "アニメ",
+                "title": "呪術廻戦",
+                "character": "五条悟"
+            },
+            {
+                "category": "アニメ",
+                "title": "ハイキュー!!",
+                "character": "黒尾鉄朗"
+            },
+            {
+                "category": "アニメ",
+                "title": "CLANNAD-クラナド-",
+                "character": "岡崎朋也"
+            }
+        ],
+        "social_links": {
+            "twitter": {
+                "username": "nakamuraFF11",
+                "profile_url": "https://x.com/nakamuraFF11",
+                "label": "本人X",
+                "kind": "person",
+                "featured_posts_embed_mode": "embed",
+                "featured_posts": [
+                    {
+                        "title": "初投稿",
+                        "url": "https://x.com/nakamuraFF11/status/9784271594?s=20"
+                    },
+                    {
+                        "title": "セレクト投稿 1",
+                        "url": "https://x.com/nakamuraFF11/status/1407154591775428611?s=20"
+                    },
+                    {
+                        "title": "セレクト投稿 2",
+                        "url": "https://x.com/nakamuraFF11/status/1311525644140834816?s=20"
+                    }
+                ]
+            },
+            "instagram": {
+                "username": "hi_yuichi_san",
+                "profile_url": "https://www.instagram.com/hi_yuichi_san/",
+                "label": "本人Instagram",
+                "kind": "person"
+            },
+            "youtube": {
+                "profile_url": "https://www.youtube.com/channel/UC3eYAvjCVwNHgkaGbXX3sig",
+                "label": "YouTubeチャンネル"
+            }
+        },
+        "appearances": {
+            "アニメ": [
+                "勇者刑に処す 懲罰勇者9004隊刑務記録（ライノー）",
+                "DIGIMON BEATBREAK（忽那カイト）",
+                "Let's Play クエストだらけのマイライフ（チャールズ・ジョーンズ）",
+                "グノーシア（シピ）",
+                "恋するワンピース（中津川嘘風）",
+                "劇場版 鬼滅の刃 無限城編 第一章 猗窩座再来（慶蔵）",
+                "出禁のモグラ（百暗桃弓木）",
+                "クレバテス-魔獣の王と赤子と屍の勇者-（クレバテス）",
+                "TO BE HERO X（黙殺）",
+                "ババンババンバンバンパイア（森長可）",
+                "わんだふるぷりきゅあ！（兎山大福）",
+                "チ。−地球の運動について−（バデーニ）",
+                "逃げ上手の若君（諏訪頼重）",
+                "WIND BREAKER（梅宮一）",
+                "メカウデ（フィスト）",
+                "喧嘩独学（扇達也）",
+                "戦隊大失格（レッドキーパー）",
+                "明治撃剣-1874-（折笠静馬）",
+                "休日のわるものさん（トリガー）",
+                "アンデッドアンラック（アンディ）",
+                "め組の大吾 救国のオレンジ（纏定家）",
+                "葬送のフリーレン（ザイン）",
+                "呪術廻戦（五条悟）",
+                "るろうに剣心-明治剣客浪漫譚-（比古清十郎）",
+                "MFゴースト（ジャクソン・テイラー）",
+                "Lv1魔王とワンルーム勇者（マックス）",
+                "ブルーロック（士道龍聖）",
+                "勇者が死んだ！（カイル・オズメント）",
+                "ツンデレ悪役令嬢リーゼロッテと実況の遠藤くんと解説の小林さん（ジークヴァルト・フィッツェンハーゲン）",
+                "東京ミュウミュウ にゅ〜（白金稜）",
+                "東京24区（筑紫渉）",
+                "トライブナイン（上野弥次郎兵衛）",
+                "見える子ちゃん（遠野善）",
+                "メガトン級ムサシ（ヴィクト・イーガー）",
+                "うらみちお兄さん（熊谷みつ夫）",
+                "SHAMAN KING（マルコ）",
+                "BORUTO-ボルト-NARUTO NEXT GENERATION（果心居士）",
+                "Dr.STONE（獅子王司）",
+                "ジョジョの奇妙な冒険 黄金の風（ブローノ・ブチャラティ）",
+                "僕のヒーローアカデミア（ホークス）",
+                "ポケットモンスター（サクラギ博士）",
+                "フルーツバスケット（草摩紫呉）",
+                "PSYCHO-PASS サイコパス３（炯・ミハイル・イグナトフ）",
+                "おそ松さん（松野カラ松）",
+                "銀河英雄伝説 Die Neue These（オスカー・フォン・ロイエンタール）",
+                "ワールドトリガー（迅悠一）",
+                "バビロン（正崎善）",
+                "真・中華一番！（シエル）",
+                "魔法科高校の劣等生（司波達也）",
+                "ドリフターズ（島津豊久）",
+                "ハイキュー!!（黒尾鉄朗）",
+                "弱虫ペダル（シリーズ古賀公貴）",
+                "氷菓（折木奉太郎）",
+                "マクロスＦ（早乙女アルト）",
+                "FAIRY TAIL（グレイ・フルバスター）",
+                "CLANNAD-クラナド-（岡崎朋也）",
+                "機動戦士ガンダム00（グラハム・エーカー）",
+                "おおきく振りかぶって（阿部隆也）"
+            ],
+            "吹き替え": [
+                "ミッキー17（ティモ）",
+                "トランスフォーマー/ONE（オライオンパックス / オプティマスプライム）",
+                "インサイド・ヘッド2（ランス・スラッシュブレード）",
+                "マスターオブスキル For the GLORY（葉修）",
+                "スコット・ピルグリム テイクズ・オフ（ルーカス・リー）",
+                "ミュータント・タートルズ：ミュータント・パニック！（ロックステディ）",
+                "グレイマン（ロイド・ハンセン）",
+                "インディ・ジョーンズと運命のダイヤル（クレーバー）",
+                "ダンジョンズ＆ドラゴンズ/アウトローたちの誇り（ゼンク）",
+                "トップガン マーヴェリック（ハングマン）",
+                "バイオハザード（Netflix版）（バクスター）",
+                "ワイルド・スピード（シリーズ）（ジェイコブ）",
+                "モービウス（マイケル・モービウス）",
+                "ソニック・ザ・ムービー/ソニックVSナックルズ（トム）",
+                "ナイル殺人事件（プーク）",
+                "アベンジャーズ（シリーズ）（キャプテン・アメリカ/スティーブ・ロジャース）",
+                "キャプテンアメリカ（シリーズ）（キャプテン・アメリカ/スティーブ・ロジャース）",
+                "ハンガー・ゲーム（シリーズ）（ゲイル・ホーソーン）",
+                "パシフィック・リム：アップライジング（ジェイク・ペントコスト）",
+                "アクアマン（オーム王/オーシャンマスター）",
+                "マッドマックス怒りのデスロード（ニュークス）",
+                "マスケティアーズ パリの四銃士（アラミス）"
+            ],
+            "ゲーム": [
+                "原神（フリンズ）",
+                "刀剣乱舞ONLINE（童子切安綱 剥落）",
+                "餓狼伝説 City of the Wolves（カイン・R・ハインライン）",
+                "メタファー：リファンタジオ（ルイ）",
+                "ロマンシング サガ2 リベンジオブザセブン（ワグナス）",
+                "ファイナルファンタジーXVI（ディオン・ルサージュ）",
+                "LIVE A LIVE（オルステッド）",
+                "トライアングルストラテジー（ロラン・グリンブルグ）",
+                "ストリートファイター４（フェイロン）",
+                "ファイナルファンタジーⅩⅢ（シド・レインズ）",
+                "大逆転裁判（亜双義一真）",
+                "ファイアーエムブレムif（リョウマ）",
+                "戦国ＢＡＳＡＲＡ（島左近）",
+                "龍が如く (シリーズ)（ハン・ジュンギ）",
+                "ファイナルファンタジーXIV（サンクレッド）",
+                "ファイナルファンタジーXV（レイヴス・ノックス・フルーレ）",
+                "ファイナルファンタジー零式（トレイ）"
+            ],
+            "特撮": [
+                "魔進戦隊キラメイジャー（ガルザの声）",
+                "ウルトラマンX（ウルトラマンXの声）",
+                "特命戦隊ゴーバスターズ（ビート・J・スタッグ）"
+            ],
+            "ナレーション": [
+                "ZOO-1グランプリ（ナレーション）",
+                "真相報道バンキシャ！（内コーナーナレーション）",
+                "ライブエール2021（ナレーション）",
+                "謎解き日本一決定戦X 2022（ナレーション）",
+                "お願い。シュウカツの神様（語り）",
+                "TVCM カロリーメイト（ナレーション）"
+            ]
+        },
+        "voice_sample_groups": {
+            "クレジット": [
+                "https://intention-k.com/wp-content/themes/intention/media/sounds/profile/nakamura_credit.mp3"
+            ],
+            "ナレーション": [
+                "https://intention-k.com/wp-content/themes/intention/media/sounds/profile/nakamura_narration_1.mp3",
+                "https://intention-k.com/wp-content/themes/intention/media/sounds/profile/nakamura_narration_2.mp3",
+                "https://intention-k.com/wp-content/themes/intention/media/sounds/profile/nakamura_narration_3.mp3"
+            ],
+            "セリフ": [
+                "https://intention-k.com/wp-content/themes/intention/media/sounds/profile/nakamura_serifu_1.mp3",
+                "https://intention-k.com/wp-content/themes/intention/media/sounds/profile/nakamura_serifu_2.mp3",
+                "https://intention-k.com/wp-content/themes/intention/media/sounds/profile/nakamura_serifu_3.mp3"
+            ]
+        },
+        "voice_samples": [
+            "https://intention-k.com/wp-content/themes/intention/media/sounds/profile/nakamura_credit.mp3",
+            "https://intention-k.com/wp-content/themes/intention/media/sounds/profile/nakamura_narration_1.mp3",
+            "https://intention-k.com/wp-content/themes/intention/media/sounds/profile/nakamura_narration_2.mp3",
+            "https://intention-k.com/wp-content/themes/intention/media/sounds/profile/nakamura_narration_3.mp3",
+            "https://intention-k.com/wp-content/themes/intention/media/sounds/profile/nakamura_serifu_1.mp3",
+            "https://intention-k.com/wp-content/themes/intention/media/sounds/profile/nakamura_serifu_2.mp3",
+            "https://intention-k.com/wp-content/themes/intention/media/sounds/profile/nakamura_serifu_3.mp3"
+        ]
+    }
+}

@@ -1,3 +1,4 @@
+import argparse
 import json
 import re
 from pathlib import Path
@@ -26,7 +27,14 @@ OUTPUT_PATH = Path(__file__).resolve().parent / "toyama_nao_data.json"
 HEADERS = {
     "User-Agent": "VoiceActorStudyScraper/1.0 (educational use)",
 }
-APPEARANCE_CATEGORIES = {"アニメ", "吹き替え", "ゲーム", "ラジオ"}
+APPEARANCE_CATEGORIES = {
+    "アニメ",
+    "吹き替え",
+    "ゲーム",
+    "特撮",
+    "ナレーション",
+    "ラジオ",
+}
 
 
 def normalize_text(text: str) -> str:
@@ -39,11 +47,18 @@ def extract_name(soup: BeautifulSoup) -> str:
     heading = soup.find("h2")
     if heading is None:
         raise ValueError("声優名の見出しが見つかりません。")
+    first_span = heading.find("span")
+    if first_span is not None:
+        return normalize_text(first_span.get_text(" ", strip=True))
     return normalize_text(heading.get_text(" ", strip=True))
 
 
 def extract_appearances(soup: BeautifulSoup) -> dict[str, list[str]]:
     """出演作品をカテゴリごとに取得する。"""
+    career_appearances = extract_career_definition_list_appearances(soup)
+    if career_appearances:
+        return career_appearances
+
     appearances: dict[str, list[str]] = {}
     current_category = None
 
@@ -73,6 +88,33 @@ def extract_appearances(soup: BeautifulSoup) -> dict[str, list[str]]:
     }
     if not appearances:
         raise ValueError("出演歴を1件も取得できませんでした。")
+    return appearances
+
+
+def extract_career_definition_list_appearances(
+    soup: BeautifulSoup,
+) -> dict[str, list[str]]:
+    """dt.profiledetail-Career_Media + dd形式の出演歴を取得する。"""
+    appearances: dict[str, list[str]] = {}
+
+    for category_tag in soup.select("dt.profiledetail-Career_Media"):
+        category = normalize_text(category_tag.get_text(" ", strip=True))
+        if category not in APPEARANCE_CATEGORIES:
+            continue
+
+        entries_tag = category_tag.find_next_sibling("dd")
+        if entries_tag is None:
+            continue
+
+        entries = [
+            format_appearance_entry(normalize_text(item.get_text(" ", strip=True)))
+            for item in entries_tag.find_all("li")
+            if normalize_text(item.get_text(" ", strip=True))
+        ]
+        entries = dedupe_preserve_order(entries)
+        if entries:
+            appearances[category] = entries
+
     return appearances
 
 
@@ -158,10 +200,31 @@ def save_json(data: dict, output_path: Path) -> None:
         json.dump(existing_data, file, ensure_ascii=False, indent=4)
 
 
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description="INTENTION公式プロフィールから声優情報をスクレイピングします。"
+    )
+    parser.add_argument(
+        "url",
+        nargs="?",
+        default=PROFILE_URL,
+        help=f"対象プロフィールURL（省略時: {PROFILE_URL}）",
+    )
+    parser.add_argument(
+        "--output",
+        type=Path,
+        default=OUTPUT_PATH,
+        help=f"保存先JSON（省略時: {OUTPUT_PATH}）",
+    )
+    return parser.parse_args()
+
+
 def main() -> None:
+    args = parse_args()
     try:
-        scraped_data = scrape_intention_profile(PROFILE_URL)
-        save_json(scraped_data, OUTPUT_PATH)
+        scraped_data = scrape_intention_profile(args.url)
+        output_path = args.output.resolve()
+        save_json(scraped_data, output_path)
     except requests.exceptions.Timeout as error:
         print(f"エラー: 公式サイトへの接続がタイムアウトしました: {error}")
         raise SystemExit(1) from error
@@ -176,7 +239,7 @@ def main() -> None:
         raise SystemExit(1) from error
 
     pprint(scraped_data, sort_dicts=False)
-    print(f"\nJSON保存先: {OUTPUT_PATH}")
+    print(f"\nJSON保存先: {output_path}")
 
 
 if __name__ == "__main__":
