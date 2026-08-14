@@ -227,6 +227,24 @@ def show_voice_sample_title(sample_title: str) -> None:
     )
 
 
+def show_voice_sample_group_title(group_name: str) -> None:
+    """ボイスサンプル内のジャンル名を、主要見出しより小さく表示する。"""
+    safe_group_name = escape(group_name)
+    st.markdown(
+        f"""
+<div style="
+  font-size: 1.18rem;
+  font-weight: 700;
+  line-height: 1.45;
+  margin: 1.15rem 0 0.35rem;
+">
+  {safe_group_name}
+</div>
+""".strip(),
+        unsafe_allow_html=True,
+    )
+
+
 def get_representative_works(actor: dict, voice_actor_data: dict) -> list[dict]:
     """JSONに保存された代表作を優先して返す。"""
     representative_works = voice_actor_data.get("representative_works")
@@ -641,7 +659,7 @@ def show_actor_details(actor_id: str) -> None:
     )
     if voice_sample_groups:
         for group_name, sample_urls in voice_sample_groups.items():
-            st.markdown(f"### {group_name}")
+            show_voice_sample_group_title(group_name)
             sample_count = len(sample_urls)
             for sample_index, sample_url in enumerate(sample_urls, start=1):
                 fixed_sample_title = get_fixed_voice_sample_title(group_name)
