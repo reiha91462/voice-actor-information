@@ -77,6 +77,19 @@ VOICE_ACTORS = {
         "analysis_path": APP_DIR / "toyama_nao_voice_analyses.json",
         "nested_key": "東山 奈央",
     },
+    "endo_aya": {
+        "name": "遠藤 綾",
+        "roman_name": "Endo Aya",
+        "sort_name": "えんどう あや",
+        "gender": "女性声優",
+        "agency": "インテンション",
+        "source_url": "https://intention-k.com/profile/aya_endo",
+        "representative_works": [],
+        "social_links": {},
+        "data_path": APP_DIR / "endo_aya_data.json",
+        "analysis_path": APP_DIR / "endo_aya_voice_analyses.json",
+        "nested_key": "遠藤 綾",
+    },
     "nakamura_yuichi": {
         "name": "中村 悠一",
         "roman_name": "Nakamura Yuichi",
@@ -89,6 +102,19 @@ VOICE_ACTORS = {
         "data_path": APP_DIR / "nakamura_yuichi_data.json",
         "analysis_path": APP_DIR / "nakamura_yuichi_voice_analyses.json",
         "nested_key": "中村 悠一",
+    },
+    "uchida_yuma": {
+        "name": "内田 雄馬",
+        "roman_name": "Uchida Yuma",
+        "sort_name": "うちだ ゆうま",
+        "gender": "男性声優",
+        "agency": "インテンション",
+        "source_url": "https://intention-k.com/profile/yuma_uchida",
+        "representative_works": [],
+        "social_links": {},
+        "data_path": APP_DIR / "uchida_yuma_data.json",
+        "analysis_path": APP_DIR / "uchida_yuma_voice_analyses.json",
+        "nested_key": "内田 雄馬",
     },
     "hasegawa_ikumi": {
         "name": "長谷川 育美",
@@ -346,14 +372,17 @@ def show_social_links(social_links: dict) -> None:
             with column:
                 components.html(button_html, height=110)
 
-    youtube_html = build_generic_link_button_html(
+    youtube_buttons = build_generic_link_button_html_list(
         youtube,
         default_label="YouTube",
         action_label="YouTubeを見る",
         background="#ff0033",
     )
-    if youtube_html:
-        components.html(youtube_html, height=105)
+    if youtube_buttons:
+        youtube_columns = st.columns(len(youtube_buttons))
+        for column, button_html in zip(youtube_columns, youtube_buttons):
+            with column:
+                components.html(button_html, height=105)
 
     featured_posts = get_featured_twitter_posts(twitter)
     if featured_posts:
@@ -443,6 +472,37 @@ def build_generic_link_button_html(
   </a>
 </div>
 """.strip()
+
+
+def build_generic_link_button_html_list(
+    link_data: dict | list | None,
+    default_label: str,
+    action_label: str,
+    background: str,
+) -> list[str]:
+    """単体または複数の汎用外部リンクボタンHTMLを作る。"""
+    if isinstance(link_data, dict):
+        button_html = build_generic_link_button_html(
+            link_data,
+            default_label=default_label,
+            action_label=action_label,
+            background=background,
+        )
+        return [button_html] if button_html else []
+
+    if isinstance(link_data, list):
+        buttons = [
+            build_generic_link_button_html(
+                item,
+                default_label=default_label,
+                action_label=action_label,
+                background=background,
+            )
+            for item in link_data
+        ]
+        return [button for button in buttons if button]
+
+    return []
 
 
 def build_twitter_button_html(twitter: dict | None) -> str:

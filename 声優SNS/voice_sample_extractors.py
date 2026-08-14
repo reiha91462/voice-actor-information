@@ -15,14 +15,20 @@ def classify_voice_sample_by_label(label: str, value: str = "") -> str:
     label = normalize_text(label)
     value = normalize_text(value).lower()
 
-    if "セリフ" in label or "台詞" in label or "serifu" in value:
-        return "セリフ"
-    if "ナレーション" in label or "ナレ" in label or "narration" in value or "_na" in value:
-        return "ナレーション"
     if "クレジット" in label or "credit" in value:
         return "クレジット"
+    if "まとめ" in label:
+        return "まとめボイス"
+    if "ナレーション" in label or "ナレ" in label:
+        return "ナレーション"
+    if "セリフ" in label or "台詞" in label:
+        return "セリフ"
     if "まとめ" in label or "all" in value:
         return "まとめボイス"
+    if "narration" in value or "_na" in value:
+        return "ナレーション"
+    if "serifu" in value:
+        return "セリフ"
     return "サンプル"
 
 

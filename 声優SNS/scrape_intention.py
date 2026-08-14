@@ -121,7 +121,7 @@ def extract_career_definition_list_appearances(
 def format_appearance_entry(entry: str) -> str:
     """「作品」役名 の表記を 作品（役名）へ寄せる。"""
     entry = normalize_text(entry)
-    match = re.match(r"^「(?P<title>.+?)」(?P<role>.+)$", entry)
+    match = re.match(r"^「(?P<title>.+)」(?P<role>.+)$", entry)
     if not match:
         return entry
 

@@ -1,0 +1,120 @@
+{
+    "遠藤 綾": {
+        "agency": "インテンション",
+        "source_url": "https://intention-k.com/profile/aya_endo",
+        "representative_works": [
+            {
+                "category": "アニメ",
+                "title": "マクロス F",
+                "character": "シェリル・ノーム"
+            },
+            {
+                "category": "アニメ",
+                "title": "らき☆すた",
+                "character": "高良みゆき"
+            },
+            {
+                "category": "アニメ",
+                "title": "呪術廻戦",
+                "character": "家入硝子"
+            }
+        ],
+        "social_links": {
+            "instagram": {
+                "username": "e_aya217",
+                "profile_url": "https://www.instagram.com/e_aya217/",
+                "label": "本人Instagram",
+                "kind": "person"
+            }
+        },
+        "appearances": {
+            "アニメ": [
+                "「お前ごときが魔王に勝てると思うな」と勇者パーティを追放されたので、王都で気ままに暮らしたい（マリア・アフェンジェンス）",
+                "デブとラブと過ちと！（幸田夢子）",
+                "地獄先生ぬ〜べ〜（高橋律子）",
+                "ユア・フォルマ（トトキ）",
+                "魔王様、リトライ！R（コウメイ）",
+                "呪術廻戦（家入硝子）",
+                "Fate/Grand Order -絶対魔獣戦線バビロニア-（ケツァル・コアトル）",
+                "ゴブリンスレイヤー（剣の乙女）",
+                "銀河英雄伝説 Die Neue These（フレデリカ・グリーンヒル）",
+                "ヴァイオレット・エヴァーガーデン（カトレア・ボードレール）",
+                "魔法使いの嫁（シルキー）",
+                "BORUTO-ボルト- -NARUTO NEXT GENERATIONS-（筧スミレ）",
+                "牙狼〈GARO〉-炎の刻印-（ジルヴァ）",
+                "おそ松さん（トト子）",
+                "妖怪ウォッチシリーズ（フミちゃん、コマさん、コマじろう、ふぶき姫 他）",
+                "ガンダムビルドファイターズトライ（カミキ・ミライ）",
+                "しろくまカフェ（笹子さん）",
+                "坂道のアポロン（深堀百合香）",
+                "機動戦士ガンダム AGE（エミリー）",
+                "とある魔術の禁書目録シリーズ（オルソラ＝アクィナス）",
+                "マクロス F（シェリル・ノーム）",
+                "ネオアンジェリーク Abyss（アンジェリーク）",
+                "らき☆すた（高良みゆき）",
+                "機動戦士ガンダム００（絹江・クロスロード）"
+            ],
+            "吹き替え": [
+                "ザ・ランナラウンズ（ソフィア）",
+                "スター・ウォーズ：ヤング・ジェダイ・アドベンチャー（リス）",
+                "私立探偵ストライク（ロビン・エラコット）",
+                "グッド・ガールズ！～NY女子のキャリア革命～（パティ）",
+                "超能力ファミリー サンダーマン（ノーラ・サンダーマン）",
+                "会いたい（イ・スヨン/ジョイ・ル）",
+                "フルハウス・ＴＡＫＥ２（チャン・マノク）",
+                "ザ・ピーナッツバター・ファルコン（エレノア）",
+                "クリスマスに降る雪は（公爵/アンジ―）",
+                "13日の金曜日 PART2（Netflix新録版）（ジニー）",
+                "ロボット（サナ）",
+                "ラザロ・エフェクト（ゾーイ・マコンネル博士）",
+                "ファンタスティック・ビースト シリーズ（クイニー・ゴールドスタイン）",
+                "太陽がいっぱい（スター・チャンネル新録版）（マルジュ・デュヴァル）",
+                "思いやりのススメ（ドット）",
+                "オオカミの誘惑（イ・ボジョン）"
+            ],
+            "ゲーム": [
+                "崩壊:スターレイル（アグライア）",
+                "ゼンレスゾーンゼロ（アストラ・ヤオ）",
+                "IdentityⅤ 第五人格（踊り子）",
+                "ペルソナ3リロード（伏見千尋）",
+                "プリンセスコネクト!Re:Dive（レディ・アラクネ）",
+                "ファイアーエムブレム エンゲージ（リュール）",
+                "ドラゴンクエストX オフライン（マイユ）",
+                "原神（夜蘭）",
+                "英雄伝説シリーズ（エリィ・マクダエル）",
+                "ブラウンダスト2（ウィルヘルミナ）",
+                "ファイナルファンタジーXIV：紅蓮のリベレーター（リセ）",
+                "STREET FIGHTER V～（神月かりん）",
+                "スターオーシャン 5 Integrity and Faithlessness（フィオーレ）",
+                "ガールフレンド（仮）（月白陽子）"
+            ],
+            "ナレーション": [
+                "「火曜は全力！華大さんと千鳥くん」"
+            ]
+        },
+        "voice_sample_groups": {
+            "クレジット": [
+                "https://intention-k.com/wp-content/themes/intention/media/sounds/profile/endo_credit.mp3"
+            ],
+            "ナレーション": [
+                "https://intention-k.com/wp-content/themes/intention/media/sounds/profile/endo_serifu_1.mp3",
+                "https://intention-k.com/wp-content/themes/intention/media/sounds/profile/endo_serifu_2.mp3"
+            ],
+            "セリフ": [
+                "https://intention-k.com/wp-content/themes/intention/media/sounds/profile/endo_serifu_3.mp3",
+                "https://intention-k.com/wp-content/themes/intention/media/sounds/profile/endo_serifu_4.mp3",
+                "https://intention-k.com/wp-content/themes/intention/media/sounds/profile/endo_serifu_5.mp3",
+                "https://intention-k.com/wp-content/themes/intention/media/sounds/profile/endo_serifu_6.mp3"
+            ]
+        },
+        "voice_samples": [
+            "https://intention-k.com/wp-content/themes/intention/media/sounds/profile/endo_credit.mp3",
+            "https://intention-k.com/wp-content/themes/intention/media/sounds/profile/endo_serifu_1.mp3",
+            "https://intention-k.com/wp-content/themes/intention/media/sounds/profile/endo_serifu_2.mp3",
+            "https://intention-k.com/wp-content/themes/intention/media/sounds/profile/endo_serifu_3.mp3",
+            "https://intention-k.com/wp-content/themes/intention/media/sounds/profile/endo_serifu_4.mp3",
+            "https://intention-k.com/wp-content/themes/intention/media/sounds/profile/endo_serifu_5.mp3",
+            "https://intention-k.com/wp-content/themes/intention/media/sounds/profile/endo_serifu_6.mp3"
+        ]
+    }
+}
