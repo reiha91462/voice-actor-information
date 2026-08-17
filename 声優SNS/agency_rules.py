@@ -11,6 +11,9 @@ AGENCY_RULES = {
     "青二プロダクション": {
         "default_voice_sample_group": "サンプル",
     },
+    "オフィス リスタート": {
+        "default_voice_sample_group": "サンプル",
+    },
     "ラクーンドッグ": {
         "default_voice_sample_group": "サンプル",
         "voice_filename_groups": {
