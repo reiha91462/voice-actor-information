@@ -8,6 +8,9 @@ AGENCY_RULES = {
     "インテンション": {
         "default_voice_sample_group": "セリフ",
     },
+    "青二プロダクション": {
+        "default_voice_sample_group": "サンプル",
+    },
     "ラクーンドッグ": {
         "default_voice_sample_group": "サンプル",
         "voice_filename_groups": {

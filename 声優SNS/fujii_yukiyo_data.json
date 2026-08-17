@@ -1,0 +1,140 @@
+{
+    "藤井 ゆきよ": {
+        "agency": "青二プロダクション",
+        "source_url": "https://www.aoni.co.jp/search/fujii-yukiyo.html",
+        "representative_works": [
+            {
+                "category": "アニメ",
+                "title": "ゲゲゲの鬼太郎",
+                "character": "犬山まな"
+            },
+            {
+                "category": "ゲーム",
+                "title": "アイドルマスター ミリオンライブ！",
+                "character": "所恵美"
+            },
+            {
+                "category": "ゲーム",
+                "title": "ウマ娘 プリティーダービー",
+                "character": "駿川たづな"
+            }
+        ],
+        "social_links": {
+            "twitter": {
+                "username": "yukiyofujii0508",
+                "profile_url": "https://x.com/yukiyofujii0508",
+                "label": "本人X",
+                "kind": "person",
+                "featured_posts_embed_mode": "embed",
+                "featured_posts": [
+                    {
+                        "title": "初投稿",
+                        "url": "https://x.com/yukiyofujii0508/status/1024195124010479616?s=20"
+                    },
+                    {
+                        "title": "セレクト投稿 1",
+                        "url": "https://x.com/yukiyofujii0508/status/2025539864775831814/video/1?s=46"
+                    },
+                    {
+                        "title": "セレクト投稿 2",
+                        "url": "https://x.com/yukiyofujii0508/status/1753773856026992809?s=46&t=mf7Z4jkyMRpTaO-IbniXGA"
+                    }
+                ]
+            },
+            "instagram": {
+                "username": "yukihachi58",
+                "profile_url": "https://www.instagram.com/yukihachi58/?hl=ja",
+                "label": "本人Instagram",
+                "kind": "person"
+            }
+        },
+        "appearances": {
+            "アニメ": [
+                "ゲゲゲの鬼太郎（犬山まな）",
+                "美少女戦士セーラームーンCrystal（土萌ほたる：セーラーサターン）",
+                "真・中華一番！（シロウ）",
+                "けものフレンズ（アルパカ・スリ）",
+                "RE：ゼロから始める異世界生活（ミミ・パールバトン）",
+                "ログ・ホライズン（てとら）",
+                "ミュークルドリーミー（杉山亮仁）",
+                "ウマ娘 プリティーダービー（駿川たづな）",
+                "パズドラ（ユキコ先生）",
+                "とある科学の超電磁砲T（雲川芹亜）",
+                "モンスター娘のお医者さん（ルララ・ハイネ）",
+                "禍つヴァールハイト-ZUERST-（エルフリーデ）",
+                "ジビエート（船田キャスリーン）",
+                "ライフル・イズ・ビューティフル（鶴巻裕子）",
+                "フルーツバスケット（花島恵）",
+                "斉木楠雄のΨ難（海藤時）",
+                "あひるの空（薮内角）",
+                "君の膵臓をたべたい（恭子）",
+                "魔法陣グルグル（トマ・パロット）",
+                "citrus（谷口はるみ）",
+                "ぱすてるメモリーズ（二条院薫子）",
+                "ツインエンジェルBREAK（ヌイ）",
+                "ヘボット！（ネジ柳ユーコ）",
+                "ルパン三世（レベッカ・ロッセリーニ）",
+                "甘城ブリリアントパーク（ラティファ・フルーランザ）",
+                "クズの本懐（早川芽衣）",
+                "最弱無敗の神装機竜（クルルシファー・エインフォルク）",
+                "魔弾の王と戦姫（レギン＝エステル＝ロワール＝バスティアン＝ド＝シャルル）",
+                "ナノ・インベーダーズ（ミミ）",
+                "FAIRY TAIL（ミリアーナ）",
+                "ハートキャッチプリキュア！（志久ななみ）",
+                "サカサマのパテマ（パテマ）"
+            ],
+            "ゲーム": [
+                "アイドルマスター ミリオンライブ！（所恵美）",
+                "ウマ娘 プリティーダービー（駿川たづな）",
+                "ライザのアトリエ2（セリ・グロース）",
+                "ブレイブリーデフォルトⅡ（ニハル）",
+                "ルーンファクトリー5（みささぎ）",
+                "デジモンサヴァイブ（ラブラモン）",
+                "ラクガキ キングダム（七海ナギ）",
+                "エグゾスヒーローズ（アイリス）",
+                "グランブルーファンタジー（バニー、ハーゼリーラ）",
+                "ファイナルファンタジー ブレイブエクスヴィアス 幻影戦争（ヴィネラ・フェネス）",
+                "戦場のヴァルキュリア4（キアラ・ロジーノ）",
+                "蒼き革命のヴァルキュリア（ヘレナ・アンデルセン）",
+                "CONCEPTION（ユズハ）",
+                "スーパーロボット大戦X-Ω（シズキ・シズカ）",
+                "英雄伝説 暁の軌跡（ジリアン・スカイ）"
+            ],
+            "洋画": [
+                "オリジナルズ（モニーク役）",
+                "ブリングリング（タイッサ・ファーミガ： サム役）",
+                "ウォールフラワー（エマ・ワトソン： サム役）",
+                "ゲーム・オブ・スローンズ（ナタリー・エマニュエル： ミッサンディ役）",
+                "スパルタカスⅢ ザ・ファイナル（グウェンドリン・テイラー： シビル役）",
+                "BONES－骨は語る－ シーズン８（キャット役）",
+                "サイコメトリー（キム・スンギ役）",
+                "梨泰院クラス（クォン・ナラ：オ・スア役）",
+                "フラットライナーズ（ニーナ・ドブレス：マーロ役）"
+            ],
+            "ラジオ": [
+                "ふじいのちょこらじ（パーソナリティ）",
+                "藤井・渡部のいっちょかめ！（パーソナリティ）"
+            ]
+        },
+        "voice_sample_groups": {
+            "クレジット": [
+                "https://www.aoni.co.jp/search/items/FujiiYukiyo_name.mp3"
+            ],
+            "ナレーション": [
+                "https://www.aoni.co.jp/search/items/FujiiYukiyo_na05.mp3",
+                "https://www.aoni.co.jp/search/items/FujiiYukiyo_na01.mp3",
+                "https://www.aoni.co.jp/search/items/FujiiYukiyo_na02.mp3",
+                "https://www.aoni.co.jp/search/items/FujiiYukiyo_na03.mp3",
+                "https://www.aoni.co.jp/search/items/FujiiYukiyo_na04.mp3"
+            ]
+        },
+        "voice_samples": [
+            "https://www.aoni.co.jp/search/items/FujiiYukiyo_name.mp3",
+            "https://www.aoni.co.jp/search/items/FujiiYukiyo_na05.mp3",
+            "https://www.aoni.co.jp/search/items/FujiiYukiyo_na01.mp3",
+            "https://www.aoni.co.jp/search/items/FujiiYukiyo_na02.mp3",
+            "https://www.aoni.co.jp/search/items/FujiiYukiyo_na03.mp3",
+            "https://www.aoni.co.jp/search/items/FujiiYukiyo_na04.mp3"
+        ]
+    }
+}
