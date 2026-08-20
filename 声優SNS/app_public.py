@@ -17,6 +17,19 @@ NUMBER_LABELS = ["①", "②", "③", "④", "⑤", "⑥", "⑦", "⑧", "⑨", 
 GENDER_SECTIONS = ["女性声優", "男性声優"]
 
 VOICE_ACTORS = {
+    "uchida_maaya": {
+        "name": "内田 真礼",
+        "roman_name": "Uchida Maaya",
+        "sort_name": "うちだ まあや",
+        "gender": "女性声優",
+        "agency": "アイムエンタープライズ",
+        "source_url": "https://www.imenterprise.jp/profile.php?id=26",
+        "representative_works": [],
+        "social_links": {},
+        "data_path": APP_DIR / "uchida_maaya_data.json",
+        "analysis_path": APP_DIR / "uchida_maaya_voice_analyses.json",
+        "nested_key": "内田 真礼",
+    },
     "nanase_tsumugi": {
         "name": "七瀬 つむぎ",
         "roman_name": "Nanase Tsumugi",

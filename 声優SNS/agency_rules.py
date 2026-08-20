@@ -14,6 +14,9 @@ AGENCY_RULES = {
     "オフィス リスタート": {
         "default_voice_sample_group": "サンプル",
     },
+    "アイムエンタープライズ": {
+        "default_voice_sample_group": "サンプル",
+    },
     "ラクーンドッグ": {
         "default_voice_sample_group": "サンプル",
         "voice_filename_groups": {
