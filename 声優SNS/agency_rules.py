@@ -17,6 +17,9 @@ AGENCY_RULES = {
     "アイムエンタープライズ": {
         "default_voice_sample_group": "サンプル",
     },
+    "81プロデュース": {
+        "default_voice_sample_group": "サンプル",
+    },
     "ラクーンドッグ": {
         "default_voice_sample_group": "サンプル",
         "voice_filename_groups": {
